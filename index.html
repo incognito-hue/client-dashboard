@@ -1,4 +1,113 @@
-<script>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Client Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+        main {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        .section {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><strong>Client Dashboard</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#" onclick="showSection('journal')">Jurnal zilnic</a></li>
+            <li><a href="#" onclick="showSection('mood')">Monitorizare stare</a></li>
+            <li><a href="#" onclick="showSection('appointments')">Programări</a></li>
+            <li><a href="#" onclick="showSection('appointmentHistory')">Istoric Programări</a></li>
+            <li><a href="#" onclick="showSection('messages')">Mesaje</a></li>
+            <li><a href="#" onclick="showSection('billing')">Plăți</a></li>
+        </ul>
+        <a href="login.html" role="button">🔒 Deconectare</a>
+    </nav>
+
+    <main class="container">
+    <section id="journal" class="section active">
+    <h2>Jurnal zilnic - CBT</h2>
+    <p>Completează jurnalul zilnic folosind metoda CBT.</p>
+    <table id="journalTable">
+        <thead>
+            <tr>
+                <th>Ziua</th>
+                <th>Situația</th>
+                <th>Gânduri</th>
+                <th>Sentimente (0-10) & Emoție</th>
+                <th>Gânduri alternative</th>
+                <th>Noi sentimente (0-10) & Emoție</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aici se vor adăuga rânduri noi -->
+        </tbody>
+    </table>
+    <button onclick="addEntry()">➕ Adaugă înregistrare</button>
+    <button type="submit">Salvează</button>
+</section>
+    </main>
+
+    <script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+   <script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    <script>
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(section => {
             section.classList.remove('active');
@@ -15,9 +124,9 @@
             "Ziua", 
             "Situația", 
             "Gânduri", 
-            "Sentimente (0-10)", "Emoție",  
+            "Sentimente (0-10)", "Emoție",  // Separăm Sentimente și Emoție
             "Gânduri alternative", 
-            "Noi sentimente (0-10)", "Noua Emoție" 
+            "Noi sentimente (0-10)", "Noua Emoție" // Separăm și pentru noile sentimente
         ];
 
         for (let i = 0; i < columns.length; i++) {
@@ -39,3 +148,8 @@
         }
     }
 </script>
+
+    }
+</script>
+</body>
+</html> 
