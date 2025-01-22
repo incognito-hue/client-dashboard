@@ -91,23 +91,7 @@
 </section>
     </main>
 
-    <script>
-    function showSection(sectionId) {
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.getElementById(sectionId).classList.add('active');
-    }
-
    <script>
-    function showSection(sectionId) {
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.getElementById(sectionId).classList.add('active');
-    }
-
-    <script>
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(section => {
             section.classList.remove('active');
@@ -124,9 +108,9 @@
             "Ziua", 
             "Situația", 
             "Gânduri", 
-            "Sentimente (0-10)", "Emoție",  // Separăm Sentimente și Emoție
+            "Sentimente (0-10)", "Emoție",  
             "Gânduri alternative", 
-            "Noi sentimente (0-10)", "Noua Emoție" // Separăm și pentru noile sentimente
+            "Noi sentimente (0-10)", "Noua Emoție" 
         ];
 
         for (let i = 0; i < columns.length; i++) {
@@ -146,9 +130,6 @@
 
             newCell.appendChild(input);
         }
-    }
-</script>
-
     }
 </script>
 </body>
