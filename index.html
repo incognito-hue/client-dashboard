@@ -68,43 +68,50 @@
     </nav>
 
     <main class="container">
-        <section id="journal" class="section active">
-            <h2>Jurnal zilnic - CBT</h2>
-            <p>Completează jurnalul zilnic folosind metoda CBT.</p>
-            <table id="journalTable">
-                <thead>
-                    <tr>
-                        <th>Ziua</th>
-                        <th>Situația</th>
-                        <th>Gânduri</th>
-                        <th>Sentimente (0-10) & Emoție</th>
-                        <th>Gânduri alternative</th>
-                        <th>Noi sentimente (0-10) & Emoție</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" placeholder="Luni"></td>
-                        <td><input type="text" placeholder="Ce făceai?"></td>
-                        <td><input type="text" placeholder="Gânduri negative"></td>
-                        <td><input type="number" min="0" max="10"> <input type="text" placeholder="Emoție"></td>
-                        <td><input type="text" placeholder="Gânduri pozitive"></td>
-                        <td><input type="number" min="0" max="10"> <input type="text" placeholder="Emoție"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-            <button type="submit">Salvează</button>
-        </section>
+    <section id="journal" class="section active">
+    <h2>Jurnal zilnic - CBT</h2>
+    <p>Completează jurnalul zilnic folosind metoda CBT.</p>
+    <table id="journalTable">
+        <thead>
+            <tr>
+                <th>Ziua</th>
+                <th>Situația</th>
+                <th>Gânduri</th>
+                <th>Sentimente (0-10) & Emoție</th>
+                <th>Gânduri alternative</th>
+                <th>Noi sentimente (0-10) & Emoție</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aici se vor adăuga rânduri noi -->
+        </tbody>
+    </table>
+    <button onclick="addEntry()">➕ Adaugă înregistrare</button>
+    <button type="submit">Salvează</button>
+</section>
     </main>
 
     <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    function addEntry() {
+        let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+        let newRow = table.insertRow();
+
+        let columns = ["Ziua", "Situația", "Gânduri", "Sentimente", "Gânduri alternative", "Noi sentimente"];
+        for (let i = 0; i < columns.length; i++) {
+            let newCell = newRow.insertCell(i);
+            let input = document.createElement("input");
+            input.type = (i === 3 || i === 5) ? "number" : "text";
+            input.placeholder = columns[i];
+            newCell.appendChild(input);
         }
-    </script>
+    }
+</script>
 </body>
 </html>
