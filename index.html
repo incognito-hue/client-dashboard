@@ -68,7 +68,7 @@
     </nav>
 
     <main class="container">
-    <section id="journal" class="section active">
+   <section id="journal" class="section active">
     <h2>Jurnal zilnic - CBT</h2>
     <p>Completează jurnalul zilnic folosind metoda CBT.</p>
     <table id="journalTable">
@@ -77,9 +77,11 @@
                 <th>Ziua</th>
                 <th>Situația</th>
                 <th>Gânduri</th>
-                <th>Sentimente (0-10) & Emoție</th>
+                <th>Emoție</th>
+                <th>Sentimente (0-10)</th>
                 <th>Gânduri alternative</th>
-                <th>Noi sentimente (0-10) & Emoție</th>
+                <th>Noua Emoție</th>
+                <th>Noi Sentimente (0-10)</th>
             </tr>
         </thead>
         <tbody>
@@ -101,27 +103,36 @@
 
     function addEntry() {
         let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+        let newRow = table.insertRow();
 
-        // Primul rând cu date principale
-        let row1 = table.insertRow();
-        row1.insertCell(0).innerHTML = `<input type="text" placeholder="Ziua">`;
-        row1.insertCell(1).innerHTML = `<input type="text" placeholder="Situația">`;
-        row1.insertCell(2).innerHTML = `<input type="text" placeholder="Gânduri">`;
-        row1.insertCell(3).innerHTML = `<input type="text" placeholder="Gânduri alternative">`;
+        // Creăm coloanele corecte
+        let columns = [
+            "Ziua", "Situația", "Gânduri", 
+            "Emoție", "Sentimente (0-10)", 
+            "Gânduri alternative", 
+            "Noua Emoție", "Noi Sentimente (0-10)"
+        ];
 
-        // Al doilea rând pentru Emoție
-        let row2 = table.insertRow();
-        let emotionCell = row2.insertCell(0);
-        emotionCell.colSpan = 4; // Face coloana să se întindă pe toată lățimea tabelului
-        emotionCell.innerHTML = `<input type="text" placeholder="Emoție" style="width: 100%;">`;
+        for (let i = 0; i < columns.length; i++) {
+            let newCell = newRow.insertCell(i);
+            let input = document.createElement("input");
 
-        // Al treilea rând pentru Sentimente (0-10)
-        let row3 = table.insertRow();
-        let sentimentCell = row3.insertCell(0);
-        sentimentCell.colSpan = 4; // Face coloana să se întindă pe toată lățimea tabelului
-        sentimentCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10" style="width: 100%;">`;
+            // Setăm tipul corect pentru fiecare coloană
+            if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
+                input.type = "number";
+                input.min = "0";
+                input.max = "10";
+                input.placeholder = "0-10";
+            } else {
+                input.type = "text";
+                input.placeholder = columns[i];
+            }
+
+            newCell.appendChild(input);
+        }
     }
 </script>
+
 
 </body>
 </html> 
