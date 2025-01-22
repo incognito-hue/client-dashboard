@@ -103,14 +103,14 @@
         let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
         let newRow = table.insertRow();
 
-        // Lista coloanelor din tabel
+        // Lista coloanelor din tabel în ordinea corectă
         let columns = [
             "Ziua", 
             "Situația", 
             "Gânduri", 
-            "Sentimente (0-10)", "Emoție",  
+            "Emoție", "Sentimente (0-10)", // Emoția vine înaintea sentimentului
             "Gânduri alternative", 
-            "Noi sentimente (0-10)", "Noua Emoție" 
+            "Noua Emoție", "Noi sentimente (0-10)" // Noua emoție înaintea noului sentiment
         ];
 
         for (let i = 0; i < columns.length; i++) {
