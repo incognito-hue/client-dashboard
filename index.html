@@ -24,6 +24,12 @@
             justify-content: space-between;
             align-items: center;
         }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
         main {
             margin-top: 80px;
             padding: 20px;
@@ -48,16 +54,6 @@
             height: 300px;
             margin-top: 20px;
         }
-        #chatBox {
-            border: 1px solid #ddd;
-            padding: 10px;
-            height: 300px;
-            overflow-y: auto;
-            background: #f9f9f9;
-        }
-        #chatInput {
-            width: 80%;
-        }
     </style>
 </head>
 <body>
@@ -70,10 +66,9 @@
             <li><a href="#" onclick="showSection('journal')">Jurnal zilnic</a></li>
             <li><a href="#" onclick="showSection('mood')">Monitorizare stare</a></li>
             <li><a href="#" onclick="showSection('appointments')">Programări</a></li>
-            <li><a href="#" onclick="showSection('homework')">Teme</a></li>
-            <li><a href="#" onclick="showSection('progress')">Progres</a></li>
-            <li><a href="#" onclick="showSection('stats')">Grafic emoțional</a></li>
             <li><a href="#" onclick="showSection('messages')">Mesaje</a></li>
+            <li><a href="#" onclick="showSection('billing')">Plăți</a></li>
+            <li><a href="#" onclick="showSection('resources')">Resurse</a></li>
         </ul>
         <a href="login.html" role="button">🔒 Deconectare</a>
     </nav>
@@ -82,11 +77,29 @@
         <section id="journal" class="section active">
             <h2>Jurnal zilnic - CBT</h2>
             <p>Completează jurnalul zilnic folosind metoda CBT.</p>
+            <table id="journalTable">
+                <thead>
+                    <tr>
+                        <th>Ziua</th>
+                        <th>Situația</th>
+                        <th>Gânduri</th>
+                        <th>Emoție</th>
+                        <th>Sentimente (0-10)</th>
+                        <th>Gânduri alternative</th>
+                        <th>Noua Emoție</th>
+                        <th>Noi Sentimente (0-10)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button onclick="addEntry()">➕ Adaugă înregistrare</button>
             <button onclick="saveJournal()">💾 Salvează</button>
+            <canvas id="moodChart"></canvas>
         </section>
 
         <section id="mood" class="section">
             <h2>Monitorizare stare</h2>
+            <p>Îți poți urmări starea emoțională zilnic.</p>
             <input type="date">
             <select>
                 <option>😊 Foarte bine</option>
@@ -99,34 +112,28 @@
 
         <section id="appointments" class="section">
             <h2>Programări</h2>
+            <p>Programează o sesiune cu psihologul.</p>
             <input type="date">
             <textarea placeholder="Motivul programării..."></textarea>
             <button>Programează-te</button>
         </section>
 
-        <section id="homework" class="section">
-            <h2>Teme</h2>
-            <input type="file">
-            <button>Încarcă tema</button>
-        </section>
-
-        <section id="progress" class="section">
-            <h2>Progres</h2>
-            <p>✔️ <span id="homeworkCount">0</span> teme încărcate</p>
-            <p>✔️ <span id="sessionsCount">0</span> sesiuni finalizate</p>
-            <p>✔️ <span id="journalDays">0</span> zile completate în jurnal</p>
-        </section>
-
-        <section id="stats" class="section">
-            <h2>Grafic Emoțional</h2>
-            <canvas id="moodChart"></canvas>
-        </section>
-
         <section id="messages" class="section">
             <h2>Mesaje</h2>
-            <div id="chatBox"></div>
-            <input type="text" id="chatInput" placeholder="Scrie un mesaj...">
-            <button onclick="sendMessage()">Trimite</button>
+            <textarea placeholder="Scrie un mesaj către psiholog..."></textarea>
+            <button>Trimite mesaj</button>
+        </section>
+
+        <section id="billing" class="section">
+            <h2>Plăți</h2>
+            <p>Aici poți vedea plățile efectuate.</p>
+            <button>Vezi facturile</button>
+        </section>
+
+        <section id="resources" class="section">
+            <h2>Resurse</h2>
+            <p>Cărți și materiale recomandate de psiholog.</p>
+            <button>Vezi resursele</button>
         </section>
     </main>
 
@@ -140,21 +147,42 @@
             document.getElementById(sectionId).classList.add('active');
         }
 
-        function saveJournal() {
-            let days = parseInt(document.getElementById("journalDays").innerText) + 1;
-            document.getElementById("journalDays").innerText = days;
+        function addEntry() {
+            let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+
+            let columns = ["Ziua", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
+
+            for (let i = 0; i < columns.length; i++) {
+                let newCell = newRow.insertCell(i);
+                if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
+                    newCell.innerHTML = `<select><option>😊 Fericit</option><option>😢 Trist</option><option>😡 Furios</option><option>😟 Anxios</option><option>😌 Relaxat</option></select>`;
+                } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
+                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
+                } else {
+                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
+                }
+            }
         }
 
-        function sendMessage() {
-            let input = document.getElementById("chatInput");
-            let message = input.value.trim();
-            if (message !== "") {
-                let chatBox = document.getElementById("chatBox");
-                let msgElement = document.createElement("p");
-                msgElement.innerText = "Tu: " + message;
-                chatBox.appendChild(msgElement);
-                input.value = "";
-            }
+        function saveJournal() {
+            let rows = document.querySelectorAll("#journalTable tbody tr");
+            let emotions = [], intensities = [];
+
+            rows.forEach(row => {
+                let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
+                let intensity = row.cells[4]?.querySelector("input")?.value || 0;
+                emotions.push(emotion);
+                intensities.push(intensity);
+            });
+
+            updateChart(emotions, intensities);
+        }
+
+        function updateChart(emotions, intensities) {
+            let ctx = document.getElementById("moodChart").getContext("2d");
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, { type: "bar", data: { labels: emotions, datasets: [{ label: "Intensitate Emoțională", data: intensities, backgroundColor: ["red", "blue", "yellow", "green", "purple"], borderWidth: 1 }] } });
         }
     </script>
 
