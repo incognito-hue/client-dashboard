@@ -99,18 +99,41 @@
         document.getElementById(sectionId).classList.add('active');
     }
 
+   <script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
     function addEntry() {
         let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
         let newRow = table.insertRow();
 
-        let columns = ["Ziua", "Situația", "Gânduri", "Sentimente", "Gânduri alternative", "Noi sentimente"];
+        let columns = ["Ziua", "Situația", "Gânduri", "Sentimente (0-10)", "Emoție", "Gânduri alternative", "Noi sentimente (0-10)", "Noua Emoție"];
         for (let i = 0; i < columns.length; i++) {
             let newCell = newRow.insertCell(i);
             let input = document.createElement("input");
-            input.type = (i === 3 || i === 5) ? "number" : "text";
-            input.placeholder = columns[i];
+
+            // Sentimente (0-10) - trebuie să fie număr
+            if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi sentimente (0-10)") {
+                input.type = "number";
+                input.min = "0";
+                input.max = "10";
+                input.placeholder = "0-10";
+            } 
+            // Celelalte - text normal
+            else {
+                input.type = "text";
+                input.placeholder = columns[i];
+            }
+
             newCell.appendChild(input);
         }
+    }
+</script>
+
     }
 </script>
 </body>
