@@ -89,8 +89,7 @@
         </tbody>
     </table>
     <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-    <button type="submit">Salvează</button>
-</section>
+    <button onclick
     </main>
 
  <script>
@@ -105,31 +104,62 @@
         let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
         let newRow = table.insertRow();
 
-        // Creăm coloanele corecte
         let columns = [
-            "Ziua", "Situația", "Gânduri", 
-            "Emoție", "Sentimente (0-10)", 
-            "Gânduri alternative", 
+            "Ziua", "Situația", "Gânduri",
+            "Emoție", "Sentimente (0-10)",
+            "Gânduri alternative",
             "Noua Emoție", "Noi Sentimente (0-10)"
         ];
 
         for (let i = 0; i < columns.length; i++) {
             let newCell = newRow.insertCell(i);
-            let input = document.createElement("input");
-
-            // Setăm tipul corect pentru fiecare coloană
-            if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-                input.type = "number";
-                input.min = "0";
-                input.max = "10";
-                input.placeholder = "0-10";
+            if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
+                newCell.innerHTML = `
+                    <select>
+                        <option>😊 Fericit</option>
+                        <option>😢 Trist</option>
+                        <option>😡 Furios</option>
+                        <option>😟 Anxios</option>
+                        <option>😌 Relaxat</option>
+                    </select>
+                `;
+            } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
+                newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
             } else {
-                input.type = "text";
-                input.placeholder = columns[i];
+                newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
             }
-
-            newCell.appendChild(input);
         }
+    }
+
+    function saveJournal() {
+        let rows = document.querySelectorAll("#journalTable tbody tr");
+        let emotions = [];
+        let intensities = [];
+
+        rows.forEach(row => {
+            let emotion = row.cells[3].querySelector("select")?.value || "N/A";
+            let intensity = row.cells[4].querySelector("input")?.value || 0;
+            emotions.push(emotion);
+            intensities.push(intensity);
+        });
+
+        updateChart(emotions, intensities);
+    }
+
+    function updateChart(emotions, intensities) {
+        let ctx = document.getElementById("moodChart").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: emotions,
+                datasets: [{
+                    label: "Intensitate Emoțională",
+                    data: intensities,
+                    backgroundColor: ["red", "blue", "yellow", "green", "purple"],
+                    borderWidth: 1
+                }]
+            }
+        });
     }
 </script>
 
