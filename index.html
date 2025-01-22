@@ -49,6 +49,11 @@
             padding: 10px;
             text-align: left;
         }
+        canvas {
+            max-width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -59,6 +64,11 @@
         </ul>
         <ul>
             <li><a href="#" onclick="showSection('journal')">Jurnal zilnic</a></li>
+            <li><a href="#" onclick="showSection('mood')">Monitorizare stare</a></li>
+            <li><a href="#" onclick="showSection('appointments')">Programări</a></li>
+            <li><a href="#" onclick="showSection('messages')">Mesaje</a></li>
+            <li><a href="#" onclick="showSection('billing')">Plăți</a></li>
+            <li><a href="#" onclick="showSection('resources')">Resurse</a></li>
         </ul>
         <a href="login.html" role="button">🔒 Deconectare</a>
     </nav>
@@ -80,19 +90,55 @@
                         <th>Noi Sentimente (0-10)</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Aici se vor adăuga rânduri noi -->
-                </tbody>
+                <tbody></tbody>
             </table>
             <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-            <button onclick="saveJournal()">💾 Salvează și Actualizează Graficul</button>
-            <button onclick="exportCSV()">📂 Exportă în CSV</button>
-            <canvas id="moodChart" width="400" height="200"></canvas> <!-- Graficul emoțional -->
+            <button onclick="saveJournal()">💾 Salvează</button>
+            <canvas id="moodChart"></canvas>
+        </section>
+
+        <section id="mood" class="section">
+            <h2>Monitorizare stare</h2>
+            <p>Îți poți urmări starea emoțională zilnic.</p>
+            <input type="date">
+            <select>
+                <option>😊 Foarte bine</option>
+                <option>😐 Normal</option>
+                <option>😞 Trist</option>
+                <option>😢 Foarte trist</option>
+            </select>
+            <button>Salvează</button>
+        </section>
+
+        <section id="appointments" class="section">
+            <h2>Programări</h2>
+            <p>Programează o sesiune cu psihologul.</p>
+            <input type="date">
+            <textarea placeholder="Motivul programării..."></textarea>
+            <button>Programează-te</button>
+        </section>
+
+        <section id="messages" class="section">
+            <h2>Mesaje</h2>
+            <textarea placeholder="Scrie un mesaj către psiholog..."></textarea>
+            <button>Trimite mesaj</button>
+        </section>
+
+        <section id="billing" class="section">
+            <h2>Plăți</h2>
+            <p>Aici poți vedea plățile efectuate.</p>
+            <button>Vezi facturile</button>
+        </section>
+
+        <section id="resources" class="section">
+            <h2>Resurse</h2>
+            <p>Cărți și materiale recomandate de psiholog.</p>
+            <button>Vezi resursele</button>
         </section>
     </main>
 
     <script>
-        let chart; // Variabilă globală pentru grafic
+        let chart;
 
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => {
@@ -105,25 +151,12 @@
             let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
             let newRow = table.insertRow();
 
-            let columns = [
-                "Ziua", "Situația", "Gânduri",
-                "Emoție", "Sentimente (0-10)",
-                "Gânduri alternative",
-                "Noua Emoție", "Noi Sentimente (0-10)"
-            ];
+            let columns = ["Ziua", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
 
             for (let i = 0; i < columns.length; i++) {
                 let newCell = newRow.insertCell(i);
                 if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-                    newCell.innerHTML = `
-                        <select>
-                            <option>😊 Fericit</option>
-                            <option>😢 Trist</option>
-                            <option>😡 Furios</option>
-                            <option>😟 Anxios</option>
-                            <option>😌 Relaxat</option>
-                        </select>
-                    `;
+                    newCell.innerHTML = `<select><option>😊 Fericit</option><option>😢 Trist</option><option>😡 Furios</option><option>😟 Anxios</option><option>😌 Relaxat</option></select>`;
                 } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
                     newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
                 } else {
@@ -134,8 +167,7 @@
 
         function saveJournal() {
             let rows = document.querySelectorAll("#journalTable tbody tr");
-            let emotions = [];
-            let intensities = [];
+            let emotions = [], intensities = [];
 
             rows.forEach(row => {
                 let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
@@ -149,50 +181,10 @@
 
         function updateChart(emotions, intensities) {
             let ctx = document.getElementById("moodChart").getContext("2d");
-
-            if (chart) {
-                chart.destroy(); // Șterge graficul vechi înainte de a crea unul nou
-            }
-
-            chart = new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: emotions,
-                    datasets: [{
-                        label: "Intensitate Emoțională",
-                        data: intensities,
-                        backgroundColor: ["red", "blue", "yellow", "green", "purple"],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
-
-        function exportCSV() {
-            let table = document.getElementById("journalTable");
-            let rows = table.querySelectorAll("tr");
-            let csvContent = [];
-
-            rows.forEach(row => {
-                let cols = row.querySelectorAll("th, td");
-                let rowData = [];
-                cols.forEach(col => {
-                    let input = col.querySelector("input, select");
-                    rowData.push(input ? input.value : col.innerText);
-                });
-                csvContent.push(rowData.join(","));
-            });
-
-            let csvBlob = new Blob([csvContent.join("\n")], { type: "text/csv" });
-            let link = document.createElement("a");
-            link.href = URL.createObjectURL(csvBlob);
-            link.download = "jurnal_CBT.csv";
-            link.click();
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, { type: "bar", data: { labels: emotions, datasets: [{ label: "Intensitate Emoțională", data: intensities, backgroundColor: ["red", "blue", "yellow", "green", "purple"], borderWidth: 1 }] } });
         }
     </script>
+
 </body>
 </html>
