@@ -84,19 +84,26 @@
 </section>
 
 <section id="questionnaires" class="section">
-    <h2>Chestionare</h2>
+    <h2>📝 Chestionare</h2>
     <p>Aici poți descărca și completa chestionarele încărcate de psiholog.</p>
 
-    <h3>Chestionare disponibile:</h3>
-    <ul id="questionnaireList">
-        <!-- Aici se vor încărca automat chestionarele -->
-    </ul>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <!-- Chestionare disponibile -->
+        <div style="flex: 1; min-width: 300px; padding: 20px; border: 2px solid #007bff; border-radius: 10px; background: #f0f8ff;">
+            <h3 style="color: #007bff;">📄 Chestionare disponibile:</h3>
+            <ul id="questionnaireList" style="padding-left: 20px;">
+                <!-- Aici se vor încărca automat chestionarele -->
+            </ul>
+        </div>
 
-    <h3>Încarcă răspunsurile tale:</h3>
-    <input type="file" id="responseFile" accept=".pdf, .doc, .docx">
-    <button onclick="uploadResponse()">📤 Trimite răspunsul</button>
-
-    <p id="uploadMessage" style="color: green; display: none;">✅ Răspunsul a fost trimis cu succes!</p>
+        <!-- Încărcare răspunsuri -->
+        <div style="flex: 1; min-width: 300px; padding: 20px; border: 2px solid #28a745; border-radius: 10px; background: #e9f7ef;">
+            <h3 style="color: #28a745;">📤 Încarcă răspunsurile tale:</h3>
+            <input type="file" id="responseFile" accept=".pdf, .doc, .docx" style="margin-bottom: 10px;">
+            <button onclick="uploadResponse()" style="background-color: #28a745; color: white;">📤 Trimite răspunsul</button>
+            <p id="uploadMessage" style="color: green; display: none;">✅ Răspunsul a fost trimis cu succes!</p>
+        </div>
+    </div>
 </section>
 
     
@@ -345,7 +352,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
     };
 </script>
 
-    <script>
+   <script>
     // Simulăm chestionarele încărcate de psiholog (într-o aplicație reală, acestea ar fi preluate de pe un server)
     let questionnaires = [
         { name: "Chestionar Depresie", url: "chestionare/chestionar_depresie.pdf" },
@@ -359,7 +366,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
 
         questionnaires.forEach(q => {
             let listItem = document.createElement("li");
-            listItem.innerHTML = `<a href="${q.url}" target="_blank">${q.name}</a>`;
+            listItem.innerHTML = `<a href="${q.url}" target="_blank" style="color: #007bff; font-weight: bold;">📎 ${q.name}</a>`;
             list.appendChild(listItem);
         });
     }
@@ -369,7 +376,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
         let file = fileInput.files[0];
 
         if (!file) {
-            alert("Te rog să selectezi un fișier înainte de a trimite răspunsul.");
+            alert("❗ Te rog să selectezi un fișier înainte de a trimite răspunsul.");
             return;
         }
 
@@ -384,6 +391,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
         loadQuestionnaires();
     };
 </script>
+
 
 
 </body>
