@@ -76,6 +76,8 @@
 <li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
 <li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
 <li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
+<li><a href="#" onclick="showSection('account')">👤 Contul meu</a></li>
+
 
         </ul>
 <a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
@@ -88,7 +90,7 @@
         <canvas id="moodChart"></canvas>
          </div>
 </section>
-
+    
 <section id="questionnaires" class="section">
     <h2>📝 Chestionare</h2>
     <p>Aici poți descărca și completa chestionarele încărcate de psiholog.</p>
@@ -185,6 +187,27 @@
             <p>Cărți și materiale recomandate de psiholog.</p>
             <button>Vezi resursele</button>
         </section>
+        <section id="account" class="section">
+    <h2>👤 Contul meu</h2>
+    <p>Aici poți gestiona setările contului tău.</p>
+
+    <h3>🔑 Schimbă parola</h3>
+    <label for="newPassword">Parolă nouă:</label>
+    <input type="password" id="newPassword">
+    <label for="confirmPassword">Confirmă parola:</label>
+    <input type="password" id="confirmPassword">
+    <button onclick="changePassword()">💾 Salvează noua parolă</button>
+    <p id="passwordMessage" style="color: green; display: none;">✅ Parola a fost actualizată!</p>
+
+    <h3>📧 Modifică Email / Telefon</h3>
+    <label for="newEmail">Email nou:</label>
+    <input type="email" id="newEmail">
+    <label for="newPhone">Telefon nou:</label>
+    <input type="tel" id="newPhone">
+    <button onclick="updateContact()">📩 Actualizează</button>
+    <p id="contactMessage" style="color: green; display: none;">✅ Datele au fost actualizate!</p>
+</section>
+
     </main>
 
 
@@ -420,6 +443,39 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
     window.onload = function () {
         loadQuestionnaires();
     };
+       function changePassword() {
+    let newPassword = document.getElementById("newPassword").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (newPassword === "" || confirmPassword === "") {
+        alert("Te rog să completezi toate câmpurile!");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        alert("Parolele nu se potrivesc!");
+        return;
+    }
+
+    // Simulăm salvarea parolei (în realitate ar trebui trimis la server)
+    console.log("Parola a fost schimbată:", newPassword);
+    document.getElementById("passwordMessage").style.display = "block";
+}
+
+function updateContact() {
+    let newEmail = document.getElementById("newEmail").value;
+    let newPhone = document.getElementById("newPhone").value;
+
+    if (newEmail === "" || newPhone === "") {
+        alert("Completează toate câmpurile!");
+        return;
+    }
+
+    console.log("Email actualizat la:", newEmail);
+    console.log("Telefon actualizat la:", newPhone);
+    document.getElementById("contactMessage").style.display = "block";
+}
+
 </script>
 
 
