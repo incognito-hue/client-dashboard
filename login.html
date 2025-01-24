@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Autentificare</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Autentificare</h2>
+        <form onsubmit="login(event)">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Parolă" required>
+            <button type="submit">Conectează-te</button>
+        </form>
+    </div>
+
+    <script>
+        function login(event) {
+            event.preventDefault(); // Previne reîncărcarea paginii
+
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            // Verificare simplă (într-o aplicație reală, ar trebui verificată într-o bază de date)
+            if (email === "test@exemplu.com" && password === "parola123") {
+                localStorage.setItem("loggedIn", "true"); // Stocăm autentificarea
+                window.location.href = "index.html"; // Redirecționează către dashboard
+            } else {
+                alert("Email sau parolă incorectă!");
+            }
+        }
+    </script>
+
+</body>
+</html>
