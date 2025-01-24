@@ -167,7 +167,45 @@
             for (let i = 0; i < columns.length; i++) {
                 let newCell = newRow.insertCell(i);
                 if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-                    newCell.innerHTML = `<select><option>😊 Fericit</option><option>😢 Trist</option><option>😡 Furios</option><option>😟 Anxios</option><option>😌 Relaxat</option></select>`;
+            newCell.innerHTML = `
+    <select>
+        <optgroup label="🌞 Emoții pozitive">
+            <option>😃 Fericit</option>
+            <option>😊 Împlinit</option>
+            <option>😁 Entuziasmat</option>
+            <option>😌 Relaxat</option>
+            <option>😍 Îndrăgostit</option>
+            <option>🤗 Recunoscător</option>
+            <option>🥳 Bucuros</option>
+            <option>🤩 Uimit</option>
+            <option>😇 Mulțumit</option>
+            <option>💪 Motivant</option>
+        </optgroup>
+        <optgroup label="⚖️ Emoții neutre">
+            <option>😐 Neutru</option>
+            <option>🤔 Gânditor</option>
+            <option>😶 Detașat</option>
+            <option>🤨 Sceptic</option>
+            <option>😑 Plictisit</option>
+        </optgroup>
+        <optgroup label="🌧️ Emoții negative">
+            <option>😞 Trist</option>
+            <option>😢 Melancolic</option>
+            <option>😠 Furios</option>
+            <option>😰 Anxios</option>
+            <option>🥺 Copleșit</option>
+            <option>💔 Deprimat</option>
+            <option>🤯 Stresat</option>
+            <option>😔 Dezamăgit</option>
+            <option>😩 Epuizat</option>
+            <option>😖 Frustrat</option>
+            <option>😭 Deznădăjduit</option>
+            <option>🤢 Dezgustat</option>
+        </optgroup>
+        <option value="custom">✍️ Altă opțiune...</option>
+    </select>
+`; 
+                
                 } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
                     newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
                 } else {
@@ -197,6 +235,20 @@
         }
     </script>
 
+<script>
+    function toggleCustomMood() {
+        let select = document.getElementById("moodSelect");
+        let customInput = document.getElementById("customMoodInput");
+
+        if (select.value === "custom") {
+            customInput.style.display = "block";
+            customInput.focus();
+        } else {
+            customInput.style.display = "none";
+            customInput.value = "";
+        }
+    }
+</script>
 
 
 </body>
