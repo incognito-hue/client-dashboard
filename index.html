@@ -229,10 +229,17 @@ main {
         </section>
 
         <section id="resources" class="section">
-            <h2>Resurse</h2>
-            <p>Cărți și materiale recomandate de psiholog.</p>
-            <button>Vezi resursele</button>
-        </section>
+    <h2>📚 Resurse Psihologice</h2>
+    <p>Ghiduri utile despre sănătatea mintală.</p>
+    <button onclick="toggleResources()">📖 Vezi resurse</button>
+    <ul id="resourcesList" style="display: none;">
+        <li>📜 <a href="#">Ghid pentru gestionarea stresului</a></li>
+        <li>📘 <a href="#">Tehnici de relaxare</a></li>
+        <li>💡 <a href="#">Îmbunătățirea somnului</a></li>
+    </ul>
+</section>
+
+        
         <section id="account" class="section">
     <h2>Contul meu</h2>
     <p>Aici poți gestiona setările contului tău.</p>
@@ -528,6 +535,10 @@ function updateContact() {
     console.log("Email actualizat la:", newEmail);
     console.log("Telefon actualizat la:", newPhone);
     document.getElementById("contactMessage").style.display = "block";
+}
+function toggleResources() {
+    let list = document.getElementById("resourcesList");
+    list.style.display = (list.style.display === "none" || list.style.display === "") ? "block" : "none";
 }
 
 </script>
