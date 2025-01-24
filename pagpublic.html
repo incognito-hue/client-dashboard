@@ -12,7 +12,7 @@
             height: 100vh;
             margin: 0;
         }
-        /* Bara laterală */
+        /* Bara laterală pe dreapta */
         nav {
             width: 250px;
             background: linear-gradient(135deg, #007bff, #0056b3);
@@ -24,6 +24,7 @@
             right: 0;
             top: 0;
             height: 100%;
+            align-items: center;
         }
         nav h2 {
             text-align: center;
@@ -32,6 +33,7 @@
         nav ul {
             list-style: none;
             padding: 0;
+            width: 100%;
         }
         nav ul li {
             padding: 15px;
@@ -39,6 +41,7 @@
             border-radius: 8px;
             text-align: center;
             transition: background 0.3s;
+            margin-bottom: 10px;
         }
         nav ul li:hover, .active {
             background: rgba(255, 255, 255, 0.3);
@@ -47,10 +50,12 @@
         main {
             flex-grow: 1;
             padding: 20px;
-            overflow: hidden;
+            overflow-y: auto;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         .section {
             display: none;
@@ -61,6 +66,7 @@
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         .active-section {
             display: block;
@@ -72,7 +78,7 @@
 </head>
 <body>
 
-<!-- Bara laterală -->
+<!-- Bara laterală verticală -->
 <nav>
     <h2>🌿 Cabinet Psihologic</h2>
     <ul>
