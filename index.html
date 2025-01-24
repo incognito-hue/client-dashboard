@@ -69,6 +69,7 @@
             <li><a href="#" onclick="showSection('appointments')">Programări</a></li>
             <li><a href="#" onclick="showSection('messages')">Mesaje</a></li>
             <li><a href="#" onclick="showSection('billing')">Plăți</a></li>
+            <li><a href="#" onclick="showSection('questionnaires')">Chestionare</a></li>
             <li><a href="#" onclick="showSection('resources')">Resurse</a></li>
         </ul>
 <a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
@@ -81,6 +82,47 @@
         <canvas id="moodChart"></canvas>
          </div>
 </section>
+
+<section id="questionnaires" class="section">
+    <h2>Chestionare</h2>
+    <p>Completează acest chestionar pentru a oferi feedback psihologului despre starea ta emoțională.</p>
+
+    <form id="questionnaireForm">
+        <label>Pentru ultima săptămână, cât de des te-ai simțit stresat?</label>
+        <select name="stress">
+            <option value="niciodată">Niciodată</option>
+            <option value="rar">Rar</option>
+            <option value="uneori">Uneori</option>
+            <option value="des">Des</option>
+            <option value="mereu">Mereu</option>
+        </select>
+
+        <label>Cât de bine ai dormit în ultimele zile?</label>
+        <select name="sleep">
+            <option value="foarte bine">Foarte bine</option>
+            <option value="bine">Bine</option>
+            <option value="normal">Normal</option>
+            <option value="prost">Prost</option>
+            <option value="foarte prost">Foarte prost</option>
+        </select>
+
+        <label>Simți că ai avut suport emoțional din partea celor din jur?</label>
+        <select name="support">
+            <option value="da, foarte mult">Da, foarte mult</option>
+            <option value="da, într-o oarecare măsură">Da, într-o oarecare măsură</option>
+            <option value="nu prea">Nu prea</option>
+            <option value="deloc">Deloc</option>
+        </select>
+
+        <label>Alte comentarii despre starea ta:</label>
+        <textarea name="comments" placeholder="Scrie aici orice detaliu relevant..."></textarea>
+
+        <button type="button" onclick="saveQuestionnaire()">💾 Salvează și Trimite</button>
+    </form>
+
+    <p id="saveMessage" style="color: green; display: none;">✅ Chestionarul a fost salvat și trimis psihologului!</p>
+</section>
+
     
     <main class="container">
         <section id="journal" class="section active">
@@ -326,6 +368,28 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
         }
     };
 </script>
+
+    <script>
+    function saveQuestionnaire() {
+        let form = document.getElementById("questionnaireForm");
+        let formData = new FormData(form);
+        let answers = {};
+
+        formData.forEach((value, key) => {
+            answers[key] = value;
+        });
+
+        // Salvăm local (într-o aplicație reală, datele ar trebui trimise la un server)
+        localStorage.setItem("questionnaireAnswers", JSON.stringify(answers));
+
+        // Confirmăm salvarea
+        document.getElementById("saveMessage").style.display = "block";
+
+        // Simulăm trimiterea către psiholog (în realitate, ai folosi un server)
+        console.log("Răspunsurile trimise psihologului:", answers);
+    }
+</script>
+
 
 </body>
 </html>
