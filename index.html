@@ -3,157 +3,669 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jurnal zilnic - CBT</title>
+    <title>Client Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
             margin: 0;
-            justify-content: center;
-            align-items: center;
         }
+       /* Bara laterală pe dreapta */
+nav {
+    width: 250px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    z-index: 1000;
+    transition: backdrop-filter 0.3s ease-in-out, background 0.3s ease-in-out;
+}
 
-        .table-container {
-            width: 100%;
-            max-width: 900px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+      nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px; /* Reduce spațiul dintre elemente */
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
+nav ul li {
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.3s ease-in-out;
+    background: none; /* Eliminăm fundalul */
+}
 
-        th {
-            background: #007bff;
-            color: white;
-            font-weight: bold;
-            padding: 10px;
-        }
+nav ul li:hover, .active {
+    background: rgba(255, 255, 255, 0.3);
+}
 
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
+.table-container {
+    width: 100%;
+    max-width: 900px; /* Crește lățimea */
+    max-height: 600px; /* Crește înălțimea */
+    overflow-y: auto; /* Permite scroll pe înălțime */
+    background: white;
+    padding: 20px; /* Adaugă mai mult spațiu în interior */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
 
-        /* 🔹 Stilizare câmpuri input și select */
-        td input, td select, td textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 5px;
-            font-size: 14px;
-            transition: all 0.3s ease-in-out;
-            min-height: 30px;
-        }
+/* Fixăm capul tabelului astfel încât să rămână vizibil la scroll */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        /* 🔹 Efect extindere pe focus */
-        td input:focus, 
-        td select:focus, 
-        td textarea:focus {
-            transform: scale(1.1); /* Se mărește caseta */
-            font-size: 16px;
-            padding: 12px;
-            border: 2px solid #007bff;
-            background: rgba(0, 123, 255, 0.1);
-            outline: none;
-        }
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background: white; /* Asigură vizibilitatea capului tabelului */
+    z-index: 2;
+}
 
-        /* 🔹 Configurare textarea pentru câmpuri mai lungi */
-        td textarea {
-            resize: vertical;
-            min-height: 40px;
-            max-height: 150px;
-        }
+
+/* Conținut principal */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    margin-right: 260px; /* Spațiu rezervat pentru meniu */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrare mai bună */
+    height: 100vh; /* Asigură o înălțime constantă */
+}
+
+
+.section {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+        .section {
+    display: none; /* Ascunde toate secțiunile */
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.section {
+    display: none;
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Fixează poziția */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrează în pagină */
+}
+
+/* Secțiunea activă este afișată */
+.active-section {
+    display: block;
+}
+/* Încadrare tabel mai mare */
+.table-container {
+    width: 100%;
+    max-width: 900px; /* Crește dimensiunea maximă */
+    max-height: 600px; /* Mai mult spațiu pentru tabel */
+    overflow-y: auto; /* Scroll doar vertical pe conținutul tabelului */
+    background: white;
+    padding: 20px; /* Mai mult spațiu în jur */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Fixăm capul tabelului pentru scroll */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Evită alinierea greșită */
+}
+
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Stilizare tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px; /* Dimensiune uniformă */
+}
+
+/* Capul tabelului */
+th {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    font-size: 14px; /* Ușor mai mare decât restul */
+    padding: 10px;
+}
+
+/* Celulele tabelului */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px; /* Același font ca restul textului */
+}
+
+/* Stil pentru câmpurile din tabel */
+td input, td select {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    font-size: 14px; /* Uniformizat cu restul tabelului */
+}
+
     </style>
+    
 </head>
 <body>
 
-<main class="container">
-    <section id="journal">
-        <h2>Jurnal zilnic - CBT</h2>
-        <p>Completează jurnalul zilnic folosind metoda CBT.</p>
+<nav>
+    <h2>🌿 Dashboard</h2>
+    <ul>
+        <li onclick="showSection('journal', this)">📖 Jurnal zilnic</li>
+        <li onclick="showSection('stats', this)">📊 Grafic Emoțional</li>
+        <li onclick="showSection('mood', this)">😊 Monitorizare stare</li>
+        <li onclick="showSection('appointments', this)">📅 Programări</li>
+        <li onclick="showSection('messages', this)">💬 Mesaje</li>
+        <li onclick="showSection('billing', this)">💳 Plăți</li>
+        <li onclick="showSection('questionnaires', this)">📝 Chestionare</li>
+        <li onclick="showSection('resources', this)">📚 Resurse</li>
+        <li onclick="showSection('account', this)">👤 Contul meu</li>
+    </ul>
+    <button onclick="logout()">🔒 Deconectare</button>
+</nav>
 
-        <div class="table-container">
-            <table id="journalTable">
-                <thead>
-                    <tr>
-                        <th>Ziua</th>
-                        <th>Situația</th>
-                        <th>Gânduri</th>
-                        <th>Emoție</th>
-                        <th>Sentimente (0-10)</th>
-                        <th>Gânduri alternative</th>
-                        <th>Noua Emoție</th>
-                        <th>Noi Sentimente (0-10)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+    
+<section id="stats" class="section">
+    <h2>Grafic Emoțional</h2>
+    <p>Vizualizează cum se schimbă emoțiile și intensitatea lor pe măsură ce îți restructurezi gândurile.</p>
+    <div style="width: 80%; max-width: 600px; margin: auto;">
+        <canvas id="moodChart"></canvas>
+         </div>
+</section>
+    
+<section id="questionnaires" class="section">
+    <h2>📝 Chestionare</h2>
+    <p>Aici poți descărca și completa chestionarele încărcate de psiholog.</p>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <!-- Chestionare disponibile -->
+        <div style="flex: 1; min-width: 300px; padding: 20px; border: 2px solid #007bff; border-radius: 10px; background: #f0f8ff;">
+            <h3 style="color: #007bff;">📄 Chestionare disponibile:</h3>
+            <ul id="questionnaireList" style="padding-left: 20px;">
+                <!-- Aici se vor încărca automat chestionarele -->
+            </ul>
         </div>
 
-        <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-        <button onclick="saveJournal()">💾 Salvează</button>
-    </section>
-</main>
+        <!-- Încărcare răspunsuri -->
+        <div style="flex: 1; min-width: 300px; padding: 20px; border: 2px solid #28a745; border-radius: 10px; background: #e9f7ef;">
+            <h3 style="color: #28a745;">📤 Încarcă răspunsurile tale:</h3>
+            <input type="file" id="responseFile" accept=".pdf, .doc, .docx" style="margin-bottom: 10px;">
+            <button onclick="uploadResponse()" style="background-color: #28a745; color: white;">📤 Trimite răspunsul</button>
+            <p id="uploadMessage" style="color: green; display: none;">✅ Răspunsul a fost trimis cu succes!</p>
+        </div>
+    </div>
+</section>
 
-<script>
-    function addEntry() {
-        let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
-        let newRow = table.insertRow();
+    
+    <main class="container">
+        
+       <section id="journal" class="section active">
+    <h2>Jurnal zilnic - CBT</h2>
+    <p>Completează jurnalul zilnic folosind metoda CBT.</p>
 
-        let columns = ["Data", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
+    <div class="table-container">
+    <table id="journalTable">
+        <thead>
+            <tr>
+                <th>Ziua</th>
+                <th>Situația</th>
+                <th>Gânduri</th>
+                <th>Emoție</th>
+                <th>Sentimente (0-10)</th>
+                <th>Gânduri alternative</th>
+                <th>Noua Emoție</th>
+                <th>Noi Sentimente (0-10)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-        for (let i = 0; i < columns.length; i++) {
-            let newCell = newRow.insertCell(i);
 
-            if (columns[i] === "Data") {
-                newCell.innerHTML = `<input type="date">`;
-            } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-                newCell.innerHTML = `<select>
-                    <option>😊 Fericit</option>
-                    <option>😢 Trist</option>
-                    <option>😡 Furios</option>
-                    <option>😰 Anxios</option>
-                </select>`;
-            } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-                newCell.innerHTML = `<input type="number" min="0" max="10">`;
-            } else {
-                newCell.innerHTML = `<textarea rows="1"></textarea>`; /* Modificat pentru text */
+    <button onclick="addEntry()">➕ Adaugă înregistrare</button>
+    <button onclick="saveJournal()">💾 Salvează</button>
+</section>
+
+
+        <section id="mood" class="section">
+            <h2>Monitorizare stare</h2>
+            <p>Îți poți urmări starea emoțională zilnic.</p>
+            <input type="date">
+            <select>
+                <option>😊 Foarte bine</option>
+                <option>😐 Normal</option>
+                <option>😞 Trist</option>
+                <option>😢 Foarte trist</option>
+                <option>😐 Neutru</option>
+                <option>🤔 Gânditor</option>
+                <option>😶 Detașat</option>
+                <option>😞 Trist</option>
+                <option>😢 Melancolic</option>
+                <option>😠 Furios</option>
+                <option>😰 Anxios</option>
+                <option>🥺 Copleșit</option>
+                <option>💔 Deprimat</option>
+                <option>🤯 Stresat</option>
+            </select>
+            <button>Salvează</button>
+        </section>
+
+        <section id="appointments" class="section">
+            <h2>Programări</h2>
+            <p>Programează o sesiune cu psihologul.</p>
+            <input type="date">
+            <textarea placeholder="Motivul programării..."></textarea>
+            <button>Programează-te</button>
+        </section>
+
+        <section id="messages" class="section">
+            <h2>Mesaje</h2>
+            <textarea placeholder="Scrie un mesaj către psiholog..."></textarea>
+            <button>Trimite mesaj</button>
+        </section>
+
+        <section id="billing" class="section">
+            <h2>Plăți</h2>
+            <p>Aici poți vedea plățile efectuate.</p>
+            <button>Vezi facturile</button>
+        </section>
+
+        <section id="resources" class="section">
+    <h2>📚 Resurse Psihologice</h2>
+    <p>Ghiduri utile despre sănătatea mintală.</p>
+    <button onclick="toggleResources()">📖 Vezi resurse</button>
+    <ul id="resourcesList" style="display: none;">
+        <li>📜 <a href="#">Ghid pentru gestionarea stresului</a></li>
+        <li>📘 <a href="#">Tehnici de relaxare</a></li>
+        <li>💡 <a href="#">Îmbunătățirea somnului</a></li>
+    </ul>
+</section>
+
+        
+        <section id="account" class="section">
+    <h2>Contul meu</h2>
+    <p>Aici poți gestiona setările contului tău.</p>
+
+    <h3>🔑 Schimbă parola</h3>
+    <label for="newPassword">Parolă nouă:</label>
+    <input type="password" id="newPassword">
+    <label for="confirmPassword">Confirmă parola:</label>
+    <input type="password" id="confirmPassword">
+    <button onclick="changePassword()">💾 Salvează noua parolă</button>
+    <p id="passwordMessage" style="color: green; display: none;">✅ Parola a fost actualizată!</p>
+
+    <h3>📧 Modifică Email / Telefon</h3>
+    <label for="newEmail">Email nou:</label>
+    <input type="email" id="newEmail">
+    <label for="newPhone">Telefon nou:</label>
+    <input type="tel" id="newPhone">
+    <button onclick="updateContact()">📩 Actualizează</button>
+    <p id="contactMessage" style="color: green; display: none;">✅ Datele au fost actualizate!</p>
+</section>
+
+    </main>
+
+
+    <script>
+        let chart;
+
+       function showSection(sectionId, element) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active-section');
+    });
+    document.getElementById(sectionId).classList.add('active-section');
+
+    document.querySelectorAll("nav ul li").forEach(li => {
+        li.classList.remove("active");
+    });
+    if (element) {
+        element.classList.add("active");
+    }
+    localStorage.setItem("currentSection", sectionId);
+}
+
+// La încărcarea paginii, menține secțiunea selectată
+window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection") || 'journal';
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
+    showSection(savedSection, activeLink);
+};
+
+
+// Asigură că secțiunea selectată anterior rămâne activă după un refresh
+window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection") || 'journal';
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
+    showSection(savedSection, activeLink);
+};
+
+        function addEntry() {
+    let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+    let newRow = table.insertRow();
+
+    let columns = ["Data", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
+
+    for (let i = 0; i < columns.length; i++) {
+        let newCell = newRow.insertCell(i);
+
+        if (columns[i] === "Data") {
+            newCell.innerHTML = `<input type="date">`;
+        } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
+            newCell.innerHTML = `
+    <select>
+        <optgroup label="🌞 Emoții pozitive">
+            <option>😃 Fericit</option>
+            <option>😊 Împlinit</option>
+            <option>😁 Entuziasmat</option>
+            <option>😌 Relaxat</option>
+            <option>😍 Îndrăgostit</option>
+            <option>🤗 Recunoscător</option>
+            <option>🥳 Bucuros</option>
+            <option>🤩 Uimit</option>
+            <option>😇 Mulțumit</option>
+            <option>💪 Motivant</option>
+        </optgroup>
+        <optgroup label="⚖️ Emoții neutre">
+            <option>😐 Neutru</option>
+            <option>🤔 Gânditor</option>
+            <option>😶 Detașat</option>
+            <option>🤨 Sceptic</option>
+            <option>😑 Plictisit</option>
+        </optgroup>
+        <optgroup label="🌧️ Emoții negative">
+            <option>😞 Trist</option>
+            <option>😢 Melancolic</option>
+            <option>😠 Furios</option>
+            <option>😰 Anxios</option>
+            <option>🥺 Copleșit</option>
+            <option>💔 Deprimat</option>
+            <option>🤯 Stresat</option>
+            <option>😔 Dezamăgit</option>
+            <option>😩 Epuizat</option>
+            <option>😖 Frustrat</option>
+            <option>😭 Deznădăjduit</option>
+            <option>🤢 Dezgustat</option>
+        </optgroup>
+    </select>
+`; 
+                
+                } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
+                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
+                } else {
+                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
+                }
             }
         }
-    }
 
-    function saveJournal() {
-        let rows = document.querySelectorAll("#journalTable tbody tr");
-        rows.forEach(row => {
-            let inputs = row.querySelectorAll("input, select, textarea");
-            let allFilled = true;
+        function saveJournal() {
+    let rows = document.querySelectorAll("#journalTable tbody tr");
+    let dates = [];
+    let initialEmotions = [];
+    let initialIntensities = [];
+    let newEmotions = [];
+    let newIntensities = [];
+    let allFilled = true;
 
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    allFilled = false;
-                    input.style.border = "2px solid red";
-                } else {
-                    input.style.border = "";
-                }
-            });
+    rows.forEach(row => {
+        let inputs = row.querySelectorAll("input, select");
 
-            if (allFilled) {
-                inputs.forEach(input => input.disabled = true);
-                alert("✅ Jurnalul a fost salvat cu succes!");
+        // Verificăm dacă toate câmpurile sunt completate
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.border = "2px solid red"; // Evidențiem câmpurile goale
+            } else {
+                input.style.border = ""; // Resetăm borderul dacă este completat
             }
         });
+    });
+
+    if (!allFilled) {
+        alert("⚠️ Te rog să completezi toate câmpurile înainte de a salva!");
+        return;
     }
+
+    // Dacă toate sunt completate, salvăm datele și le blocăm
+    rows.forEach(row => {
+        let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
+        let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
+        let intensity = row.cells[4]?.querySelector("input")?.value || 0;
+        let newEmotion = row.cells[6]?.querySelector("select")?.value || "N/A";
+        let newIntensity = row.cells[7]?.querySelector("input")?.value || 0;
+
+        if (!isNaN(intensity) && intensity !== "" && !isNaN(newIntensity) && newIntensity !== "") {
+            dates.push(date);
+            initialEmotions.push(emotion);
+            initialIntensities.push(parseInt(intensity));
+            newEmotions.push(newEmotion);
+            newIntensities.push(parseInt(newIntensity));
+        }
+
+        // Blocăm toate câmpurile după salvare
+        let inputs = row.querySelectorAll("input, select");
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
+    });
+
+    // Actualizăm graficul emoțional
+    updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
+
+    alert("✅ Jurnalul a fost salvat cu succes!");
+}
+
+
+function updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities) {
+    let ctx = document.getElementById("moodChart").getContext("2d");
+
+    if (chart) {
+        chart.destroy();
+    }
+
+    let labels = dates.map((date, i) => `${date} - ${initialEmotions[i]} → ${newEmotions[i]}`);
+
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Emoție inițială",
+                    data: initialIntensities,
+                    backgroundColor: "rgba(255, 99, 132, 0.6)",
+                    borderColor: "red",
+                    borderWidth: 1
+                },
+                {
+                    label: "Noua Emoție",
+                    data: newIntensities,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "green",
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Compararea Emoțiilor Inițiale și Noi",
+                    font: { size: 14 }
+                },
+                legend: {
+                    display: true,
+                    position: "top"
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 10,
+                    title: {
+                        display: true,
+                        text: "Intensitate Emoțională (0-10)"
+                    }
+                }
+            }
+        }
+    });
+}
 </script>
+
+<script>
+    function logout() {
+        localStorage.removeItem("loggedIn"); // Ștergem autentificarea
+        window.location.href = "pagpublic.html"; // Redirecționează către pagina de Log In
+    }
+
+   window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection");
+    if (savedSection) {
+        let activeLink = document.querySelector(`nav ul li a[onclick*="${savedSection}"]`);
+        showSection(savedSection, activeLink);
+    } else {
+        showSection('journal', document.querySelector('nav ul li a'));
+    }
+
+    // Verificăm dacă utilizatorul este autentificat
+    if (!localStorage.getItem("loggedIn")) {
+        window.location.href = "login.html";
+    }
+};
+
+</script>
+
+   <script>
+    // Simulăm chestionarele încărcate de psiholog (într-o aplicație reală, acestea ar fi preluate de pe un server)
+    let questionnaires = [
+        { name: "Chestionar Depresie", url: "chestionare/chestionar_depresie.pdf" },
+        { name: "Chestionar Anxietate", url: "chestionare/chestionar_anxietate.pdf" },
+        { name: "Scala Stresului Perceput", url: "chestionare/scala_stres.pdf" }
+    ];
+
+    function loadQuestionnaires() {
+        let list = document.getElementById("questionnaireList");
+        list.innerHTML = ""; // Ștergem lista anterioară
+
+        questionnaires.forEach(q => {
+            let listItem = document.createElement("li");
+            listItem.innerHTML = `<a href="${q.url}" target="_blank" style="color: #007bff; font-weight: bold;">📎 ${q.name}</a>`;
+            list.appendChild(listItem);
+        });
+    }
+
+    function uploadResponse() {
+        let fileInput = document.getElementById("responseFile");
+        let file = fileInput.files[0];
+
+        if (!file) {
+            alert("❗ Te rog să selectezi un fișier înainte de a trimite răspunsul.");
+            return;
+        }
+
+        // Simulăm trimiterea către psiholog (în realitate, ai folosi un server)
+        console.log("Fișier trimis:", file.name);
+
+        document.getElementById("uploadMessage").style.display = "block";
+    }
+
+    // Încărcăm lista de chestionare când pagina se deschide
+    window.onload = function () {
+        loadQuestionnaires();
+    };
+       function changePassword() {
+    let newPassword = document.getElementById("newPassword").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (newPassword === "" || confirmPassword === "") {
+        alert("Te rog să completezi toate câmpurile!");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        alert("Parolele nu se potrivesc!");
+        return;
+    }
+
+    // Simulăm salvarea parolei (în realitate ar trebui trimis la server)
+    console.log("Parola a fost schimbată:", newPassword);
+    document.getElementById("passwordMessage").style.display = "block";
+}
+
+function updateContact() {
+    let newEmail = document.getElementById("newEmail").value;
+    let newPhone = document.getElementById("newPhone").value;
+
+    if (newEmail === "" || newPhone === "") {
+        alert("Completează toate câmpurile!");
+        return;
+    }
+
+    console.log("Email actualizat la:", newEmail);
+    console.log("Telefon actualizat la:", newPhone);
+    document.getElementById("contactMessage").style.display = "block";
+}
+function toggleResources() {
+    let list = document.getElementById("resourcesList");
+    list.style.display = (list.style.display === "none" || list.style.display === "") ? "block" : "none";
+}
+
+</script>
+
+
 
 </body>
 </html>
