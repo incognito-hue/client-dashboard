@@ -85,42 +85,18 @@
 
 <section id="questionnaires" class="section">
     <h2>Chestionare</h2>
-    <p>Completează acest chestionar pentru a oferi feedback psihologului despre starea ta emoțională.</p>
+    <p>Aici poți descărca și completa chestionarele încărcate de psiholog.</p>
 
-    <form id="questionnaireForm">
-        <label>Pentru ultima săptămână, cât de des te-ai simțit stresat?</label>
-        <select name="stress">
-            <option value="niciodată">Niciodată</option>
-            <option value="rar">Rar</option>
-            <option value="uneori">Uneori</option>
-            <option value="des">Des</option>
-            <option value="mereu">Mereu</option>
-        </select>
+    <h3>Chestionare disponibile:</h3>
+    <ul id="questionnaireList">
+        <!-- Aici se vor încărca automat chestionarele -->
+    </ul>
 
-        <label>Cât de bine ai dormit în ultimele zile?</label>
-        <select name="sleep">
-            <option value="foarte bine">Foarte bine</option>
-            <option value="bine">Bine</option>
-            <option value="normal">Normal</option>
-            <option value="prost">Prost</option>
-            <option value="foarte prost">Foarte prost</option>
-        </select>
+    <h3>Încarcă răspunsurile tale:</h3>
+    <input type="file" id="responseFile" accept=".pdf, .doc, .docx">
+    <button onclick="uploadResponse()">📤 Trimite răspunsul</button>
 
-        <label>Simți că ai avut suport emoțional din partea celor din jur?</label>
-        <select name="support">
-            <option value="da, foarte mult">Da, foarte mult</option>
-            <option value="da, într-o oarecare măsură">Da, într-o oarecare măsură</option>
-            <option value="nu prea">Nu prea</option>
-            <option value="deloc">Deloc</option>
-        </select>
-
-        <label>Alte comentarii despre starea ta:</label>
-        <textarea name="comments" placeholder="Scrie aici orice detaliu relevant..."></textarea>
-
-        <button type="button" onclick="saveQuestionnaire()">💾 Salvează și Trimite</button>
-    </form>
-
-    <p id="saveMessage" style="color: green; display: none;">✅ Chestionarul a fost salvat și trimis psihologului!</p>
+    <p id="uploadMessage" style="color: green; display: none;">✅ Răspunsul a fost trimis cu succes!</p>
 </section>
 
     
@@ -370,24 +346,43 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
 </script>
 
     <script>
-    function saveQuestionnaire() {
-        let form = document.getElementById("questionnaireForm");
-        let formData = new FormData(form);
-        let answers = {};
+    // Simulăm chestionarele încărcate de psiholog (într-o aplicație reală, acestea ar fi preluate de pe un server)
+    let questionnaires = [
+        { name: "Chestionar Depresie", url: "chestionare/chestionar_depresie.pdf" },
+        { name: "Chestionar Anxietate", url: "chestionare/chestionar_anxietate.pdf" },
+        { name: "Scala Stresului Perceput", url: "chestionare/scala_stres.pdf" }
+    ];
 
-        formData.forEach((value, key) => {
-            answers[key] = value;
+    function loadQuestionnaires() {
+        let list = document.getElementById("questionnaireList");
+        list.innerHTML = ""; // Ștergem lista anterioară
+
+        questionnaires.forEach(q => {
+            let listItem = document.createElement("li");
+            listItem.innerHTML = `<a href="${q.url}" target="_blank">${q.name}</a>`;
+            list.appendChild(listItem);
         });
+    }
 
-        // Salvăm local (într-o aplicație reală, datele ar trebui trimise la un server)
-        localStorage.setItem("questionnaireAnswers", JSON.stringify(answers));
+    function uploadResponse() {
+        let fileInput = document.getElementById("responseFile");
+        let file = fileInput.files[0];
 
-        // Confirmăm salvarea
-        document.getElementById("saveMessage").style.display = "block";
+        if (!file) {
+            alert("Te rog să selectezi un fișier înainte de a trimite răspunsul.");
+            return;
+        }
 
         // Simulăm trimiterea către psiholog (în realitate, ai folosi un server)
-        console.log("Răspunsurile trimise psihologului:", answers);
+        console.log("Fișier trimis:", file.name);
+
+        document.getElementById("uploadMessage").style.display = "block";
     }
+
+    // Încărcăm lista de chestionare când pagina se deschide
+    window.onload = function () {
+        loadQuestionnaires();
+    };
 </script>
 
 
