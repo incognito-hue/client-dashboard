@@ -67,6 +67,21 @@ main {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+        .section {
+    display: none; /* Ascunde toate secțiunile */
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Secțiunea activă este afișată */
+.active-section {
+    display: block;
+}
+
     </style>
 </head>
 <body>
@@ -222,24 +237,30 @@ main {
         function showSection(sectionId, element) {
     // Ascunde toate secțiunile
     document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
+        section.classList.remove('active-section');
     });
-    document.getElementById(sectionId).classList.add('active');
+    document.getElementById(sectionId).classList.add('active-section');
 
-    // Elimină clasa 'active' din toate linkurile de navigare
-    document.querySelectorAll("nav ul li a").forEach(link => {
-        link.classList.remove("active");
+    // Elimină clasa 'active' din toate butoanele de navigare
+    document.querySelectorAll("nav ul li").forEach(li => {
+        li.classList.remove("active");
     });
 
-    // Adaugă clasa 'active' la linkul curent
+    // Adaugă clasa 'active' la butonul curent
     if (element) {
         element.classList.add("active");
     }
 
-    // Salvăm secțiunea curentă în localStorage pentru a o reține la refresh
+    // Salvează secțiunea curentă în LocalStorage pentru a fi reținută la refresh
     localStorage.setItem("currentSection", sectionId);
 }
 
+// Asigură că secțiunea selectată anterior rămâne activă după un refresh
+window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection") || 'journal';
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
+    showSection(savedSection, activeLink);
+};
 
         function addEntry() {
     let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
