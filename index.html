@@ -10,78 +10,210 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-        }
-        nav ul li a.active {
-    background-color: #007bff;
-    color: white !important;
-    padding: 8px 15px;
-    border-radius: 5px;
-}       main {
-            margin-top: 80px;
-            padding: 20px;
-        }
+       /* Bara laterală pe dreapta */
+nav {
+    width: 250px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    z-index: 1000;
+    transition: backdrop-filter 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+      nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px; /* Reduce spațiul dintre elemente */
+}
+
+nav ul li {
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.3s ease-in-out;
+    background: none; /* Eliminăm fundalul */
+}
+
+nav ul li:hover, .active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.table-container {
+    width: 100%;
+    max-width: 900px; /* Crește lățimea */
+    max-height: 600px; /* Crește înălțimea */
+    overflow-y: auto; /* Permite scroll pe înălțime */
+    background: white;
+    padding: 20px; /* Adaugă mai mult spațiu în interior */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+/* Fixăm capul tabelului astfel încât să rămână vizibil la scroll */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background: white; /* Asigură vizibilitatea capului tabelului */
+    z-index: 2;
+}
+
+
+/* Conținut principal */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    margin-right: 260px; /* Spațiu rezervat pentru meniu */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centrare mai bună */
+    height: 100vh; /* Asigură o înălțime constantă */
+}
+
+
+.section {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
         .section {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        canvas {
-            max-width: 100%;
-            height: 300px;
-            margin-top: 20px;
-        }
+    display: none; /* Ascunde toate secțiunile */
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.section {
+    display: none;
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Fixează poziția */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrează în pagină */
+}
+
+/* Secțiunea activă este afișată */
+.active-section {
+    display: block;
+}
+/* Încadrare tabel mai mare */
+.table-container {
+    width: 100%;
+    max-width: 900px; /* Crește dimensiunea maximă */
+    max-height: 600px; /* Mai mult spațiu pentru tabel */
+    overflow-y: auto; /* Scroll doar vertical pe conținutul tabelului */
+    background: white;
+    padding: 20px; /* Mai mult spațiu în jur */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Fixăm capul tabelului pentru scroll */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Evită alinierea greșită */
+}
+
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Stilizare tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px; /* Dimensiune uniformă */
+}
+
+/* Capul tabelului */
+th {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    font-size: 14px; /* Ușor mai mare decât restul */
+    padding: 10px;
+}
+
+/* Celulele tabelului */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px; /* Același font ca restul textului */
+}
+
+/* Stil pentru câmpurile din tabel */
+td input, td select {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    font-size: 14px; /* Uniformizat cu restul tabelului */
+}
+
     </style>
+    
 </head>
 <body>
 
-    <nav>
-        <ul>
-            <li><strong>Client Dashboard</strong></li>
-        </ul>
-        <ul>
-           <li><a href="#" onclick="showSection('journal', this)">Jurnal zilnic</a></li>
-<li><a href="#" onclick="showSection('stats', this)">Grafic Emoțional</a></li>
-<li><a href="#" onclick="showSection('mood', this)">Monitorizare stare</a></li>
-<li><a href="#" onclick="showSection('appointments', this)">Programări</a></li>
-<li><a href="#" onclick="showSection('messages', this)">Mesaje</a></li>
-<li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
-<li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
-<li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
-<li><a href="#" onclick="showSection('account')">Contul meu</a></li>
+<nav>
+    <h2>🌿 Dashboard</h2>
+    <ul>
+        <li onclick="showSection('journal', this)">📖 Jurnal zilnic</li>
+        <li onclick="showSection('stats', this)">📊 Grafic Emoțional</li>
+        <li onclick="showSection('mood', this)">😊 Monitorizare stare</li>
+        <li onclick="showSection('appointments', this)">📅 Programări</li>
+        <li onclick="showSection('messages', this)">💬 Mesaje</li>
+        <li onclick="showSection('billing', this)">💳 Plăți</li>
+        <li onclick="showSection('questionnaires', this)">📝 Chestionare</li>
+        <li onclick="showSection('resources', this)">📚 Resurse</li>
+        <li onclick="showSection('account', this)">👤 Contul meu</li>
+    </ul>
+    <button onclick="logout()">🔒 Deconectare</button>
+</nav>
 
-
-        </ul>
-<a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
-    </nav>
     
 <section id="stats" class="section">
     <h2>Grafic Emoțional</h2>
@@ -116,28 +248,34 @@
 
     
     <main class="container">
-        <section id="journal" class="section active">
-            <h2>Jurnal zilnic - CBT</h2>
-            <p>Completează jurnalul zilnic folosind metoda CBT.</p>
-            <table id="journalTable">
-                <thead>
-                    <tr>
-                        <th>Ziua</th>
-                        <th>Situația</th>
-                        <th>Gânduri</th>
-                        <th>Emoție</th>
-                        <th>Sentimente (0-10)</th>
-                        <th>Gânduri alternative</th>
-                        <th>Noua Emoție</th>
-                        <th>Noi Sentimente (0-10)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-            <button onclick="saveJournal()">💾 Salvează</button>
-            <canvas id="moodChart"></canvas>
-        </section>
+        
+       <section id="journal" class="section active">
+    <h2>Jurnal zilnic - CBT</h2>
+    <p>Completează jurnalul zilnic folosind metoda CBT.</p>
+
+    <div class="table-container">
+    <table id="journalTable">
+        <thead>
+            <tr>
+                <th>Ziua</th>
+                <th>Situația</th>
+                <th>Gânduri</th>
+                <th>Emoție</th>
+                <th>Sentimente (0-10)</th>
+                <th>Gânduri alternative</th>
+                <th>Noua Emoție</th>
+                <th>Noi Sentimente (0-10)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+
+    <button onclick="addEntry()">➕ Adaugă înregistrare</button>
+    <button onclick="saveJournal()">💾 Salvează</button>
+</section>
+
 
         <section id="mood" class="section">
             <h2>Monitorizare stare</h2>
@@ -183,10 +321,17 @@
         </section>
 
         <section id="resources" class="section">
-            <h2>Resurse</h2>
-            <p>Cărți și materiale recomandate de psiholog.</p>
-            <button>Vezi resursele</button>
-        </section>
+    <h2>📚 Resurse Psihologice</h2>
+    <p>Ghiduri utile despre sănătatea mintală.</p>
+    <button onclick="toggleResources()">📖 Vezi resurse</button>
+    <ul id="resourcesList" style="display: none;">
+        <li>📜 <a href="#">Ghid pentru gestionarea stresului</a></li>
+        <li>📘 <a href="#">Tehnici de relaxare</a></li>
+        <li>💡 <a href="#">Îmbunătățirea somnului</a></li>
+    </ul>
+</section>
+
+        
         <section id="account" class="section">
     <h2>Contul meu</h2>
     <p>Aici poți gestiona setările contului tău.</p>
@@ -214,27 +359,35 @@
     <script>
         let chart;
 
-        function showSection(sectionId, element) {
-    // Ascunde toate secțiunile
+       function showSection(sectionId, element) {
     document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
+        section.classList.remove('active-section');
     });
-    document.getElementById(sectionId).classList.add('active');
+    document.getElementById(sectionId).classList.add('active-section');
 
-    // Elimină clasa 'active' din toate linkurile de navigare
-    document.querySelectorAll("nav ul li a").forEach(link => {
-        link.classList.remove("active");
+    document.querySelectorAll("nav ul li").forEach(li => {
+        li.classList.remove("active");
     });
-
-    // Adaugă clasa 'active' la linkul curent
     if (element) {
         element.classList.add("active");
     }
-
-    // Salvăm secțiunea curentă în localStorage pentru a o reține la refresh
     localStorage.setItem("currentSection", sectionId);
 }
 
+// La încărcarea paginii, menține secțiunea selectată
+window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection") || 'journal';
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
+    showSection(savedSection, activeLink);
+};
+
+
+// Asigură că secțiunea selectată anterior rămâne activă după un refresh
+window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection") || 'journal';
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
+    showSection(savedSection, activeLink);
+};
 
         function addEntry() {
     let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
@@ -301,7 +454,28 @@
     let initialIntensities = [];
     let newEmotions = [];
     let newIntensities = [];
+    let allFilled = true;
 
+    rows.forEach(row => {
+        let inputs = row.querySelectorAll("input, select");
+
+        // Verificăm dacă toate câmpurile sunt completate
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.border = "2px solid red"; // Evidențiem câmpurile goale
+            } else {
+                input.style.border = ""; // Resetăm borderul dacă este completat
+            }
+        });
+    });
+
+    if (!allFilled) {
+        alert("⚠️ Te rog să completezi toate câmpurile înainte de a salva!");
+        return;
+    }
+
+    // Dacă toate sunt completate, salvăm datele și le blocăm
     rows.forEach(row => {
         let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
         let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
@@ -316,9 +490,18 @@
             newEmotions.push(newEmotion);
             newIntensities.push(parseInt(newIntensity));
         }
+
+        // Blocăm toate câmpurile după salvare
+        let inputs = row.querySelectorAll("input, select");
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
     });
 
+    // Actualizăm graficul emoțional
     updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
+
+    alert("✅ Jurnalul a fost salvat cu succes!");
 }
 
 
@@ -475,8 +658,14 @@ function updateContact() {
     console.log("Telefon actualizat la:", newPhone);
     document.getElementById("contactMessage").style.display = "block";
 }
+function toggleResources() {
+    let list = document.getElementById("resourcesList");
+    list.style.display = (list.style.display === "none" || list.style.display === "") ? "block" : "none";
+}
 
 </script>
+
+
 
 </body>
 </html>
