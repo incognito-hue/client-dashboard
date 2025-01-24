@@ -3,26 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jurnal zilnic - CBT</title>
+    <title>Client Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
-            margin: 0;
-            justify-content: center;
-            align-items: center;
         }
 
+        /* Bara laterală */
+        nav {
+            width: 250px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100%;
+            align-items: center;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        nav ul li {
+            width: 100%;
+            padding: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s ease-in-out;
+        }
+
+        nav ul li:hover, .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Container tabel */
         .table-container {
             width: 100%;
             max-width: 900px;
+            max-height: 600px;
+            overflow-y: auto;
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container thead {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 2;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         table {
@@ -35,15 +89,18 @@
             background: #007bff;
             color: white;
             font-weight: bold;
+            font-size: 15px;
             padding: 10px;
         }
 
         td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
         }
 
-        /* 🔹 Efect mărire casetă la focus */
+        /* 🔹 Mărirea casetelor când sunt selectate */
         td input, td select, td textarea {
             width: 100%;
             padding: 8px;
@@ -54,10 +111,16 @@
             transition: all 0.3s ease-in-out;
         }
 
+        td textarea {
+            resize: vertical; /* Permite extinderea manuală doar vertical */
+            min-height: 30px;
+            max-height: 150px;
+        }
+
         td input:focus, 
         td select:focus, 
         td textarea:focus {
-            transform: scale(1.1); /* Se mărește caseta */
+            transform: scale(1.05); /* Se mărește ușor */
             font-size: 16px;
             padding: 12px;
             border: 2px solid #007bff;
@@ -65,18 +128,27 @@
             outline: none;
         }
 
-        /* 🔹 Configurare textarea */
-        td textarea {
-            resize: vertical;
-            min-height: 30px;
-            max-height: 120px;
+        /* 🔹 Evidențierea rândului completat */
+        tr.completed {
+            background-color: #e6ffe6 !important;
+            transition: background 0.3s ease-in-out;
         }
+
     </style>
 </head>
 <body>
 
+<nav>
+    <h2>🌿 Dashboard</h2>
+    <ul>
+        <li onclick="showSection('journal', this)">📖 Jurnal zilnic</li>
+        <li onclick="showSection('stats', this)">📊 Grafic Emoțional</li>
+    </ul>
+    <button onclick="logout()">🔒 Deconectare</button>
+</nav>
+
 <main class="container">
-    <section id="journal">
+    <section id="journal" class="section active">
         <h2>Jurnal zilnic - CBT</h2>
         <p>Completează jurnalul zilnic folosind metoda CBT.</p>
 
@@ -146,10 +218,23 @@
             });
 
             if (allFilled) {
+                row.classList.add("completed"); // Schimbă culoarea rândului completat
                 inputs.forEach(input => input.disabled = true);
-                alert("✅ Jurnalul a fost salvat cu succes!");
             }
         });
+
+        alert("✅ Jurnalul a fost salvat cu succes!");
+    }
+
+    function showSection(sectionId, element) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    function logout() {
+        alert("Te-ai deconectat!");
     }
 </script>
 
