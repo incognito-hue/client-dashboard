@@ -59,7 +59,7 @@
         td input:focus, 
         td select:focus, 
         td textarea:focus {
-            transform: scale(1.1);
+            transform: scale(1.1); /* Se mărește caseta */
             font-size: 16px;
             padding: 12px;
             border: 2px solid #007bff;
@@ -72,22 +72,6 @@
             resize: vertical;
             min-height: 40px;
             max-height: 150px;
-        }
-
-        /* 🔹 Stilizare buton ștergere */
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .delete-btn:hover {
-            background-color: #c82333;
         }
     </style>
 </head>
@@ -110,7 +94,6 @@
                         <th>Gânduri alternative</th>
                         <th>Noua Emoție</th>
                         <th>Noi Sentimente (0-10)</th>
-                        <th>Acțiuni</th> <!-- Coloană pentru butonul de ștergere -->
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -144,18 +127,9 @@
             } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
                 newCell.innerHTML = `<input type="number" min="0" max="10">`;
             } else {
-                newCell.innerHTML = `<textarea rows="1"></textarea>`;
+                newCell.innerHTML = `<textarea rows="1"></textarea>`; /* Modificat pentru text */
             }
         }
-
-        // Adaugă butonul de ștergere în ultima coloană
-        let deleteCell = newRow.insertCell(columns.length);
-        deleteCell.innerHTML = `<button class="delete-btn" onclick="deleteRow(this)">❌ Șterge</button>`;
-    }
-
-    function deleteRow(button) {
-        let row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
     }
 
     function saveJournal() {
