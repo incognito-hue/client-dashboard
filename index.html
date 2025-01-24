@@ -31,11 +31,12 @@
             gap: 15px;
         }
         nav ul li a.active {
-    background-color: #007bff;
-    color: white !important;
-    padding: 8px 15px;
-    border-radius: 5px;
-}       main {
+            background-color: #007bff;
+            color: white !important;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+        main {
             margin-top: 80px;
             padding: 20px;
         }
@@ -68,50 +69,17 @@
             <li><strong>Client Dashboard</strong></li>
         </ul>
         <ul>
-           <li><a href="#" onclick="showSection('journal', this)">Jurnal zilnic</a></li>
-<li><a href="#" onclick="showSection('stats', this)">Grafic Emoțional</a></li>
-<li><a href="#" onclick="showSection('mood', this)">Monitorizare stare</a></li>
-<li><a href="#" onclick="showSection('appointments', this)">Programări</a></li>
-<li><a href="#" onclick="showSection('messages', this)">Mesaje</a></li>
-<li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
-<li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
-<li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
-
+            <li><a href="#" onclick="showSection('journal', this)">Jurnal zilnic</a></li>
+            <li><a href="#" onclick="showSection('stats', this)">Grafic Emoțional</a></li>
+            <li><a href="#" onclick="showSection('mood', this)">Monitorizare stare</a></li>
+            <li><a href="#" onclick="showSection('appointments', this)">Programări</a></li>
+            <li><a href="#" onclick="showSection('messages', this)">Mesaje</a></li>
+            <li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
+            <li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
+            <li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
         </ul>
-<a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
+        <a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
     </nav>
-    
-<section id="stats" class="section">
-    <h2>Grafic Emoțional</h2>
-    <p>Vizualizează cum se schimbă emoțiile și intensitatea lor pe măsură ce îți restructurezi gândurile.</p>
-    <div style="width: 80%; max-width: 600px; margin: auto;">
-        <canvas id="moodChart"></canvas>
-         </div>
-</section>
-
-<section id="questionnaires" class="section">
-    <h2>📝 Chestionare</h2>
-    <p>Aici poți descărca și completa chestionarele încărcate de psiholog.</p>
-
-    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-        <!-- Chestionare disponibile -->
-        <div style="flex: 1; min-width: 300px; padding: 20px; border: 2px solid #007bff; border-radius: 10px; background: #f0f8ff;">
-            <h3 style="color: #007bff;">📄 Chestionare disponibile:</h3>
-            <ul id="questionnaireList" style="padding-left: 20px;">
-                <!-- Aici se vor încărca automat chestionarele -->
-            </ul>
-        </div>
-
-        <!-- Încărcare răspunsuri -->
-        <div style="flex: 1; min-width: 300px; padding: 20px; border: 2px solid #28a745; border-radius: 10px; background: #e9f7ef;">
-            <h3 style="color: #28a745;">📤 Încarcă răspunsurile tale:</h3>
-            <input type="file" id="responseFile" accept=".pdf, .doc, .docx" style="margin-bottom: 10px;">
-            <button onclick="uploadResponse()" style="background-color: #28a745; color: white;">📤 Trimite răspunsul</button>
-            <p id="uploadMessage" style="color: green; display: none;">✅ Răspunsul a fost trimis cu succes!</p>
-        </div>
-    </div>
-</section>
-
     
     <main class="container">
         <section id="journal" class="section active">
@@ -120,7 +88,7 @@
             <table id="journalTable">
                 <thead>
                     <tr>
-                        <th>Ziua</th>
+                        <th>Data</th>
                         <th>Situația</th>
                         <th>Gânduri</th>
                         <th>Emoție</th>
@@ -133,297 +101,117 @@
                 <tbody></tbody>
             </table>
             <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-            <button onclick="saveJournal()">💾 Salvează</button>
-            <canvas id="moodChart"></canvas>
-        </section>
-
-        <section id="mood" class="section">
-            <h2>Monitorizare stare</h2>
-            <p>Îți poți urmări starea emoțională zilnic.</p>
-            <input type="date">
-            <select>
-                <option>😊 Foarte bine</option>
-                <option>😐 Normal</option>
-                <option>😞 Trist</option>
-                <option>😢 Foarte trist</option>
-                <option>😐 Neutru</option>
-                <option>🤔 Gânditor</option>
-                <option>😶 Detașat</option>
-                <option>😞 Trist</option>
-                <option>😢 Melancolic</option>
-                <option>😠 Furios</option>
-                <option>😰 Anxios</option>
-                <option>🥺 Copleșit</option>
-                <option>💔 Deprimat</option>
-                <option>🤯 Stresat</option>
-            </select>
-            <button>Salvează</button>
-        </section>
-
-        <section id="appointments" class="section">
-            <h2>Programări</h2>
-            <p>Programează o sesiune cu psihologul.</p>
-            <input type="date">
-            <textarea placeholder="Motivul programării..."></textarea>
-            <button>Programează-te</button>
-        </section>
-
-        <section id="messages" class="section">
-            <h2>Mesaje</h2>
-            <textarea placeholder="Scrie un mesaj către psiholog..."></textarea>
-            <button>Trimite mesaj</button>
-        </section>
-
-        <section id="billing" class="section">
-            <h2>Plăți</h2>
-            <p>Aici poți vedea plățile efectuate.</p>
-            <button>Vezi facturile</button>
-        </section>
-
-        <section id="resources" class="section">
-            <h2>Resurse</h2>
-            <p>Cărți și materiale recomandate de psiholog.</p>
-            <button>Vezi resursele</button>
+            <button id="saveButton" onclick="saveJournal()" disabled>💾 Salvează</button>
+            <p id="saveMessageJournal" style="color: green; display: none;">✅ Jurnal salvat cu succes!</p>
         </section>
     </main>
 
-
     <script>
-        let chart;
-
         function showSection(sectionId, element) {
-    // Ascunde toate secțiunile
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-    document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
 
-    // Elimină clasa 'active' din toate linkurile de navigare
-    document.querySelectorAll("nav ul li a").forEach(link => {
-        link.classList.remove("active");
-    });
+            document.querySelectorAll("nav ul li a").forEach(link => {
+                link.classList.remove("active");
+            });
 
-    // Adaugă clasa 'active' la linkul curent
-    if (element) {
-        element.classList.add("active");
-    }
+            if (element) {
+                element.classList.add("active");
+            }
 
-    // Salvăm secțiunea curentă în localStorage pentru a o reține la refresh
-    localStorage.setItem("currentSection", sectionId);
-}
-
+            localStorage.setItem("currentSection", sectionId);
+        }
 
         function addEntry() {
-    let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
-    let newRow = table.insertRow();
+            let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+            let newRow = table.insertRow();
+            let columns = ["Data", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
 
-    let columns = ["Data", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
+            for (let i = 0; i < columns.length; i++) {
+                let newCell = newRow.insertCell(i);
+                let input;
 
-    for (let i = 0; i < columns.length; i++) {
-        let newCell = newRow.insertCell(i);
-
-        if (columns[i] === "Data") {
-            newCell.innerHTML = `<input type="date">`;
-        } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-            newCell.innerHTML = `
-    <select>
-        <optgroup label="🌞 Emoții pozitive">
-            <option>😃 Fericit</option>
-            <option>😊 Împlinit</option>
-            <option>😁 Entuziasmat</option>
-            <option>😌 Relaxat</option>
-            <option>😍 Îndrăgostit</option>
-            <option>🤗 Recunoscător</option>
-            <option>🥳 Bucuros</option>
-            <option>🤩 Uimit</option>
-            <option>😇 Mulțumit</option>
-            <option>💪 Motivant</option>
-        </optgroup>
-        <optgroup label="⚖️ Emoții neutre">
-            <option>😐 Neutru</option>
-            <option>🤔 Gânditor</option>
-            <option>😶 Detașat</option>
-            <option>🤨 Sceptic</option>
-            <option>😑 Plictisit</option>
-        </optgroup>
-        <optgroup label="🌧️ Emoții negative">
-            <option>😞 Trist</option>
-            <option>😢 Melancolic</option>
-            <option>😠 Furios</option>
-            <option>😰 Anxios</option>
-            <option>🥺 Copleșit</option>
-            <option>💔 Deprimat</option>
-            <option>🤯 Stresat</option>
-            <option>😔 Dezamăgit</option>
-            <option>😩 Epuizat</option>
-            <option>😖 Frustrat</option>
-            <option>😭 Deznădăjduit</option>
-            <option>🤢 Dezgustat</option>
-        </optgroup>
-    </select>
-`; 
-                
+                if (columns[i] === "Data") {
+                    input = document.createElement("input");
+                    input.type = "date";
+                } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
+                    input = document.createElement("select");
+                    input.innerHTML = `
+                        <option value="">--Selectează emoția--</option>
+                        <option>😃 Fericit</option>
+                        <option>😊 Împlinit</option>
+                        <option>😞 Trist</option>
+                        <option>😠 Furios</option>
+                    `;
                 } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
+                    input = document.createElement("input");
+                    input.type = "number";
+                    input.min = 0;
+                    input.max = 10;
+                    input.placeholder = "0-10";
                 } else {
-                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
+                    input = document.createElement("input");
+                    input.type = "text";
+                    input.placeholder = columns[i];
                 }
+
+                input.oninput = checkFormCompletion;
+                newCell.appendChild(input);
             }
+
+            document.getElementById("saveButton").disabled = true;
+        }
+
+        function checkFormCompletion() {
+            let allFilled = true;
+            let rows = document.querySelectorAll("#journalTable tbody tr");
+
+            rows.forEach(row => {
+                let inputs = row.querySelectorAll("input, select");
+                inputs.forEach(input => {
+                    if (input.value.trim() === "" || input.value === "--Selectează emoția--") {
+                        allFilled = false;
+                    }
+                });
+            });
+
+            document.getElementById("saveButton").disabled = !allFilled;
         }
 
         function saveJournal() {
-    let rows = document.querySelectorAll("#journalTable tbody tr");
-    let dates = [];
-    let initialEmotions = [];
-    let initialIntensities = [];
-    let newEmotions = [];
-    let newIntensities = [];
+            let rows = document.querySelectorAll("#journalTable tbody tr");
 
-    rows.forEach(row => {
-        let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
-        let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
-        let intensity = row.cells[4]?.querySelector("input")?.value || 0;
-        let newEmotion = row.cells[6]?.querySelector("select")?.value || "N/A";
-        let newIntensity = row.cells[7]?.querySelector("input")?.value || 0;
+            rows.forEach(row => {
+                let inputs = row.querySelectorAll("input, select");
+                inputs.forEach(input => {
+                    input.setAttribute("disabled", "true");
+                });
+            });
 
-        if (!isNaN(intensity) && intensity !== "" && !isNaN(newIntensity) && newIntensity !== "") {
-            dates.push(date);
-            initialEmotions.push(emotion);
-            initialIntensities.push(parseInt(intensity));
-            newEmotions.push(newEmotion);
-            newIntensities.push(parseInt(newIntensity));
+            let saveMessage = document.getElementById("saveMessageJournal");
+            saveMessage.style.display = "block";
+            setTimeout(() => {
+                saveMessage.style.display = "none";
+            }, 3000);
+
+            document.getElementById("saveButton").disabled = true;
         }
-    });
 
-    updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
-}
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            window.location.href = "login.html";
+        }
 
-
-function updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities) {
-    let ctx = document.getElementById("moodChart").getContext("2d");
-
-    if (chart) {
-        chart.destroy();
-    }
-
-    let labels = dates.map((date, i) => `${date} - ${initialEmotions[i]} → ${newEmotions[i]}`);
-
-    chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Emoție inițială",
-                    data: initialIntensities,
-                    backgroundColor: "rgba(255, 99, 132, 0.6)",
-                    borderColor: "red",
-                    borderWidth: 1
-                },
-                {
-                    label: "Noua Emoție",
-                    data: newIntensities,
-                    backgroundColor: "rgba(75, 192, 192, 0.6)",
-                    borderColor: "green",
-                    borderWidth: 1
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            aspectRatio: 2,
-            plugins: {
-                title: {
-                    display: true,
-                    text: "Compararea Emoțiilor Inițiale și Noi",
-                    font: { size: 14 }
-                },
-                legend: {
-                    display: true,
-                    position: "top"
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 10,
-                    title: {
-                        display: true,
-                        text: "Intensitate Emoțională (0-10)"
-                    }
-                }
+        window.onload = function () {
+            let savedSection = localStorage.getItem("currentSection");
+            if (savedSection) {
+                let activeLink = document.querySelector(`nav ul li a[onclick*="${savedSection}"]`);
+                showSection(savedSection, activeLink);
             }
-        }
-    });
-}
-</script>
-
-<script>
-    function logout() {
-        localStorage.removeItem("loggedIn"); // Ștergem autentificarea
-        window.location.href = "login.html"; // Redirecționează către pagina de Log In
-    }
-
-   window.onload = function () {
-    let savedSection = localStorage.getItem("currentSection");
-    if (savedSection) {
-        let activeLink = document.querySelector(`nav ul li a[onclick*="${savedSection}"]`);
-        showSection(savedSection, activeLink);
-    } else {
-        showSection('journal', document.querySelector('nav ul li a'));
-    }
-
-    // Verificăm dacă utilizatorul este autentificat
-    if (!localStorage.getItem("loggedIn")) {
-        window.location.href = "login.html";
-    }
-};
-
-</script>
-
-   <script>
-    // Simulăm chestionarele încărcate de psiholog (într-o aplicație reală, acestea ar fi preluate de pe un server)
-    let questionnaires = [
-        { name: "Chestionar Depresie", url: "chestionare/chestionar_depresie.pdf" },
-        { name: "Chestionar Anxietate", url: "chestionare/chestionar_anxietate.pdf" },
-        { name: "Scala Stresului Perceput", url: "chestionare/scala_stres.pdf" }
-    ];
-
-    function loadQuestionnaires() {
-        let list = document.getElementById("questionnaireList");
-        list.innerHTML = ""; // Ștergem lista anterioară
-
-        questionnaires.forEach(q => {
-            let listItem = document.createElement("li");
-            listItem.innerHTML = `<a href="${q.url}" target="_blank" style="color: #007bff; font-weight: bold;">📎 ${q.name}</a>`;
-            list.appendChild(listItem);
-        });
-    }
-
-    function uploadResponse() {
-        let fileInput = document.getElementById("responseFile");
-        let file = fileInput.files[0];
-
-        if (!file) {
-            alert("❗ Te rog să selectezi un fișier înainte de a trimite răspunsul.");
-            return;
-        }
-
-        // Simulăm trimiterea către psiholog (în realitate, ai folosi un server)
-        console.log("Fișier trimis:", file.name);
-
-        document.getElementById("uploadMessage").style.display = "block";
-    }
-
-    // Încărcăm lista de chestionare când pagina se deschide
-    window.onload = function () {
-        loadQuestionnaires();
-    };
-</script>
-
-
+        };
+    </script>
 
 </body>
 </html>
-
