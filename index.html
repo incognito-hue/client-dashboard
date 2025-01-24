@@ -133,8 +133,9 @@
                 <tbody></tbody>
             </table>
             <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-            <button onclick="saveJournal()">💾 Salvează</button>
-            <canvas id="moodChart"></canvas>
+           <button onclick="saveJournal()">💾 Salvează</button>
+<p id="saveMessageJournal" style="color: green; display: none;">✅ Jurnal salvat cu succes!</p>
+
         </section>
 
         <section id="mood" class="section">
@@ -157,7 +158,8 @@
                 <option>💔 Deprimat</option>
                 <option>🤯 Stresat</option>
             </select>
-            <button>Salvează</button>
+<button onclick="saveMood()">💾 Salvează</button>
+<p id="saveMessageMood" style="color: green; display: none;">✅ Starea emoțională a fost salvată!</p>
         </section>
 
         <section id="appointments" class="section">
@@ -271,31 +273,24 @@
             }
         }
 
-        function saveJournal() {
-    let rows = document.querySelectorAll("#journalTable tbody tr");
-    let dates = [];
-    let initialEmotions = [];
-    let initialIntensities = [];
-    let newEmotions = [];
-    let newIntensities = [];
+       function saveJournal() {
+    let saveMessage = document.getElementById("saveMessageJournal");
+    saveMessage.style.display = "block"; // Afișează mesajul
+    setTimeout(() => {
+        saveMessage.style.display = "none"; // Ascunde mesajul după 3 secunde
+    }, 3000);
+}
 
-    rows.forEach(row => {
-        let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
-        let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
-        let intensity = row.cells[4]?.querySelector("input")?.value || 0;
-        let newEmotion = row.cells[6]?.querySelector("select")?.value || "N/A";
-        let newIntensity = row.cells[7]?.querySelector("input")?.value || 0;
-
-        if (!isNaN(intensity) && intensity !== "" && !isNaN(newIntensity) && newIntensity !== "") {
-            dates.push(date);
-            initialEmotions.push(emotion);
-            initialIntensities.push(parseInt(intensity));
-            newEmotions.push(newEmotion);
-            newIntensities.push(parseInt(newIntensity));
-        }
     });
 
     updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
+}
+function saveMood() {
+    let saveMessage = document.getElementById("saveMessageMood");
+    saveMessage.style.display = "block"; // Afișează mesajul
+    setTimeout(() => {
+        saveMessage.style.display = "none"; // Ascunde mesajul după 3 secunde
+    }, 3000);
 }
 
 
