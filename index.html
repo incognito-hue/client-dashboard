@@ -77,7 +77,9 @@
 <section id="stats" class="section">
     <h2>Grafic Emoțional</h2>
     <p>Vizualizează cum se schimbă emoțiile și intensitatea lor pe măsură ce îți restructurezi gândurile.</p>
-    <canvas id="moodChart" width="400" height="200"></canvas>
+    <div style="width: 80%; max-width: 600px; margin: auto;">
+        <canvas id="moodChart"></canvas>
+         </div>
 </section>
     
     <main class="container">
@@ -244,61 +246,63 @@
         updateChart(initialEmotions, initialIntensities, newEmotions, newIntensities);
     }
 
-    function updateChart(initialEmotions, initialIntensities, newEmotions, newIntensities) {
-        let ctx = document.getElementById("moodChart").getContext("2d");
+function updateChart(initialEmotions, initialIntensities, newEmotions, newIntensities) {
+    let ctx = document.getElementById("moodChart").getContext("2d");
 
-        if (chart) {
-            chart.destroy();
-        }
+    if (chart) {
+        chart.destroy();
+    }
 
-        chart = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: initialEmotions.map((e, i) => `Ziua ${i + 1}`),
-                datasets: [
-                    {
-                        label: "Emoție inițială",
-                        data: initialIntensities,
-                        backgroundColor: "rgba(255, 99, 132, 0.6)",
-                        borderColor: "red",
-                        borderWidth: 1
-                    },
-                    {
-                        label: "Noua Emoție",
-                        data: newIntensities,
-                        backgroundColor: "rgba(75, 192, 192, 0.6)",
-                        borderColor: "green",
-                        borderWidth: 1
-                    }
-                ]
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: initialEmotions.map((e, i) => `Ziua ${i + 1}`),
+            datasets: [
+                {
+                    label: "Emoție inițială",
+                    data: initialIntensities,
+                    backgroundColor: "rgba(255, 99, 132, 0.6)",
+                    borderColor: "red",
+                    borderWidth: 1
+                },
+                {
+                    label: "Noua Emoție",
+                    data: newIntensities,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "green",
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2, /* Face graficul mai lat și mai compact */
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Compararea Emoțiilor Inițiale și Noi",
+                    font: { size: 14 }
+                },
+                legend: {
+                    display: true,
+                    position: "top"
+                }
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 10,
                     title: {
                         display: true,
-                        text: "Compararea Emoțiilor Inițiale și Noi",
-                        font: { size: 16 }
-                    },
-                    legend: {
-                        display: true,
-                        position: "top"
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 10,
-                        title: {
-                            display: true,
-                            text: "Intensitate Emoțională (0-10)"
-                        }
+                        text: "Intensitate Emoțională (0-10)"
                     }
                 }
             }
-        });
-    }
+        }
+    });
+}
+
 </script>
 
 
