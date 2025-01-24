@@ -253,10 +253,12 @@ function updateChart(initialEmotions, initialIntensities, newEmotions, newIntens
         chart.destroy();
     }
 
+    let labels = initialEmotions.map((e, i) => `Ziua ${i + 1} - ${e} → ${newEmotions[i]}`);
+
     chart = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: initialEmotions.map((e, i) => `Ziua ${i + 1}`),
+            labels: labels, // Etichete cu ziua + emoția inițială → noua emoție
             datasets: [
                 {
                     label: "Emoție inițială",
@@ -287,6 +289,16 @@ function updateChart(initialEmotions, initialIntensities, newEmotions, newIntens
                 legend: {
                     display: true,
                     position: "top"
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let index = context.dataIndex;
+                            let datasetLabel = context.dataset.label || "";
+                            let emotion = datasetLabel.includes("Inițială") ? initialEmotions[index] : newEmotions[index];
+                            return `${datasetLabel}: ${emotion} (${context.raw}/10)`;
+                        }
+                    }
                 }
             },
             scales: {
@@ -302,6 +314,7 @@ function updateChart(initialEmotions, initialIntensities, newEmotions, newIntens
         }
     });
 }
+
 
 </script>
 
