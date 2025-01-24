@@ -41,19 +41,21 @@ nav {
 }
 
 nav ul li {
-    width: 100%; /* Ocupă toată lățimea meniului */
-    padding: 8px; /* Micșorează padding-ul */
-    font-size: 20px; /* Reduce dimensiunea textului */
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
     cursor: pointer;
-    border-radius: 5px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    transition: background 0.3s;
+    transition: color 0.3s ease-in-out;
+    background: none; /* Eliminăm fundalul */
 }
 
+/* Efect doar la hover și la secțiunea activă */
 nav ul li:hover, .active {
-    background: rgba(255, 255, 255, 0.3);
+    background: none; /* Elimină complet fundalul blurat */
+    color: #fff; /* Păstrează doar schimbarea culorii textului */
 }
+
 
 
 /* Conținut principal */
