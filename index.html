@@ -3,185 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Client Dashboard</title>
+    <title>Autentificare</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
         }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-        }
-        nav ul li a.active {
-            background-color: #007bff;
-            color: white !important;
-            padding: 8px 15px;
-            border-radius: 5px;
-        }
-        main {
-            margin-top: 80px;
+        .login-container {
+            background: white;
             padding: 20px;
-        }
-        .section {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        canvas {
-            max-width: 100%;
-            height: 300px;
-            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <ul>
-            <li><strong>Client Dashboard</strong></li>
-        </ul>
-        <ul>
-            <li><a href="#" onclick="showSection('journal', this)">Jurnal zilnic</a></li>
-            <li><a href="#" onclick="showSection('stats', this)">Grafic Emoțional</a></li>
-            <li><a href="#" onclick="showSection('mood', this)">Monitorizare stare</a></li>
-            <li><a href="#" onclick="showSection('appointments', this)">Programări</a></li>
-            <li><a href="#" onclick="showSection('messages', this)">Mesaje</a></li>
-            <li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
-            <li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
-            <li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
-        </ul>
-        <a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
-    </nav>
-
-    <main class="container">
-        <section id="journal" class="section active">
-            <h2>Jurnal zilnic - CBT</h2>
-            <p>Completează jurnalul zilnic folosind metoda CBT.</p>
-            <table id="journalTable">
-                <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Situația</th>
-                        <th>Gânduri</th>
-                        <th>Emoție</th>
-                        <th>Sentimente (0-10)</th>
-                        <th>Gânduri alternative</th>
-                        <th>Noua Emoție</th>
-                        <th>Noi Sentimente (0-10)</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-            <button onclick="saveJournal()">💾 Salvează</button>
-            <canvas id="moodChart"></canvas>
-        </section>
-
-        <section id="stats" class="section">
-            <h2>Grafic Emoțional</h2>
-            <div style="width: 80%; max-width: 600px; margin: auto;">
-                <canvas id="moodChart"></canvas>
-            </div>
-        </section>
-
-        <section id="questionnaires" class="section">
-            <h2>Chestionare</h2>
-            <h3>Chestionare disponibile:</h3>
-            <ul id="questionnaireList"></ul>
-            <h3>Încarcă răspunsurile tale:</h3>
-            <input type="file" id="responseFile" accept=".pdf, .doc, .docx">
-            <button onclick="uploadResponse()">📤 Trimite răspunsul</button>
-            <p id="uploadMessage" style="color: green; display: none;">✅ Răspunsul a fost trimis cu succes!</p>
-        </section>
-    </main>
+    <div class="login-container">
+        <h2>Autentificare</h2>
+        <form onsubmit="login(event)">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Parolă" required>
+            <button type="submit">Conectează-te</button>
+        </form>
+    </div>
 
     <script>
-        function showSection(sectionId, element) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+        function login(event) {a
+            event.preventDefault(); // Previne reîncărcarea paginii
 
-            document.querySelectorAll("nav ul li a").forEach(link => {
-                link.classList.remove("active");
-            });
-            if (element) {
-                element.classList.add("active");
-            }
-            localStorage.setItem("currentSection", sectionId);
-        }
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
 
-        window.onload = function () {
-            let savedSection = localStorage.getItem("currentSection");
-            if (savedSection) {
-                let activeLink = document.querySelector(`nav ul li a[onclick*="${savedSection}"]`);
-                showSection(savedSection, activeLink);
+            // Verificare simplă (într-o aplicație reală, ar trebui verificată într-o bază de date)
+            if (email === "bianca@gmail.com" && password === "123") {
+                localStorage.setItem("loggedIn", "true"); // Stocăm autentificarea
+                window.location.href = "index.html"; // Redirecționează către dashboard
             } else {
-                showSection('journal', document.querySelector('nav ul li a'));
+                alert("Email sau parolă incorectă!");
             }
-
-            if (!localStorage.getItem("loggedIn")) {
-                window.location.href = "login.html";
-            }
-
-            loadQuestionnaires();
-        };
-
-        function logout() {
-            localStorage.removeItem("loggedIn");
-            window.location.href = "login.html";
-        }
-
-        function loadQuestionnaires() {
-            let list = document.getElementById("questionnaireList");
-            list.innerHTML = "";
-            let questionnaires = [
-                { name: "Chestionar Depresie", url: "chestionare/chestionar_depresie.pdf" },
-                { name: "Chestionar Anxietate", url: "chestionare/chestionar_anxietate.pdf" }
-            ];
-            questionnaires.forEach(q => {
-                let listItem = document.createElement("li");
-                listItem.innerHTML = `<a href="${q.url}" target="_blank">${q.name}</a>`;
-                list.appendChild(listItem);
-            });
-        }
-
-        function uploadResponse() {
-            let fileInput = document.getElementById("responseFile");
-            let file = fileInput.files[0];
-            if (!file) {
-                alert("Te rog să selectezi un fișier înainte de a trimite răspunsul.");
-                return;
-            }
-            document.getElementById("uploadMessage").style.display = "block";
         }
     </script>
 
