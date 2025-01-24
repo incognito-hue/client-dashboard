@@ -31,18 +31,25 @@
             margin-bottom: 20px;
         }
         nav ul {
-            list-style: none;
-            padding: 0;
-            width: 100%;
-        }
-        nav ul li {
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 8px;
-            text-align: center;
-            transition: background 0.3s;
-            margin-bottom: 10px;
-        }
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Acum sunt așezate pe verticală */
+    gap: 10px;
+}
+
+nav ul li {
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: center;
+    transition: background 0.3s;
+    margin-bottom: 5px; /* Adaugă spațiere între ele */
+    display: block; /* Asigură că fiecare element ocupă un rând întreg */
+    width: 100%; /* Se extinde pe toată lățimea meniului */
+}
+
         nav ul li:hover, .active {
             background: rgba(255, 255, 255, 0.3);
         }
