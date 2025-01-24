@@ -28,13 +28,13 @@ nav {
     z-index: 1000;
 }
 
-       /nav ul {
+       nav ul {
     list-style: none;
     padding: 0;
     width: 100%;
     display: flex;
     flex-direction: column; /* Aranjează elementele pe verticală */
-    align-items: flex-start; /* Aliniere la stânga */
+    align-items: stretch; /* Aliniere la stânga */
     gap: 10px;
 }
 
@@ -43,7 +43,8 @@ nav ul li {
     padding: 15px;
     cursor: pointer;
     border-radius: 8px;
-    text-align: left; /* Textul aliniat la stânga */
+    text-align: center; /* Textul centrat */
+    background: rgba(255, 255, 255, 0.1); /* Fundal subtil */
     transition: background 0.3s;
 }
 
@@ -51,16 +52,19 @@ nav ul li:hover, .active {
     background: rgba(255, 255, 255, 0.3);
 }
 
+
 /* Conținut principal */
 main {
     flex-grow: 1;
     padding: 20px;
-    margin-right: 260px; /* Asigurăm spațiu pentru bara laterală */
+    margin-right: 260px; /* Spațiu rezervat pentru meniu */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px; /* Spațiu între secțiuni */
+    justify-content: center; /* Centrare mai bună */
+    height: 100vh; /* Asigură o înălțime constantă */
 }
+
 
 .section {
     width: 100%;
@@ -78,6 +82,19 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.section {
+    display: none;
+    width: 80%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Fixează poziția */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrează în pagină */
 }
 
 /* Secțiunea activă este afișată */
@@ -237,26 +254,28 @@ main {
     <script>
         let chart;
 
-        function showSection(sectionId, element) {
-    // Ascunde toate secțiunile
+       function showSection(sectionId, element) {
     document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active-section');
     });
     document.getElementById(sectionId).classList.add('active-section');
 
-    // Elimină clasa 'active' din toate butoanele de navigare
     document.querySelectorAll("nav ul li").forEach(li => {
         li.classList.remove("active");
     });
-
-    // Adaugă clasa 'active' la butonul curent
     if (element) {
         element.classList.add("active");
     }
-
-    // Salvează secțiunea curentă în LocalStorage pentru a fi reținută la refresh
     localStorage.setItem("currentSection", sectionId);
 }
+
+// La încărcarea paginii, menține secțiunea selectată
+window.onload = function () {
+    let savedSection = localStorage.getItem("currentSection") || 'journal';
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
+    showSection(savedSection, activeLink);
+};
+
 
 // Asigură că secțiunea selectată anterior rămâne activă după un refresh
 window.onload = function () {
