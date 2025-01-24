@@ -184,13 +184,20 @@ td {
 }
 
 /* Stil pentru câmpurile din tabel */
-td input, td select {
+#journal .table-container td input, 
+#journal .table-container td select {
     width: 100%;
-    padding: 8px;
-    border: none;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-    font-size: 14px; /* Uniformizat cu restul tabelului */
+    padding: 6px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out; /* Tranziție lină */
+}
+
+#journal .table-container td input:focus, 
+#journal .table-container td select:focus {
+    font-size: 15px; /* Se mărește textul */
+    padding: 10px; /* Crește spațierea */
+    border: 2px solid #007bff; /* Evidențiere la focus */
+    outline: none;
 }
 
     </style>
