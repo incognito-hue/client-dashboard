@@ -12,24 +12,36 @@
         header {
             text-align: center;
             padding: 40px;
-            background: #007bff;
+            background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
-            font-size: 1.8em;
+            font-size: 2em;
+            font-weight: bold;
         }
         main {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             padding: 20px;
         }
         .container {
-            background: #f8f9fa;
+            background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         .button-primary {
             background-color: #007bff;
             color: white;
+            width: 100%;
+        }
+        .highlight {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
         }
     </style>
 </head>
@@ -39,20 +51,20 @@
 
 <main>
     <section class="container">
-        <h2>🧠 Resurse Psihologice</h2>
-        <p>Aici găsești articole și ghiduri utile despre sănătatea mintală.</p>
-        <button onclick="showResources()">📖 Vezi resursele</button>
-        <ul id="resourcesList" style="display:none;">
-            <li><a href="#">📜 Ghid pentru gestionarea stresului</a></li>
-            <li><a href="#">📘 Tehnici de relaxare</a></li>
-            <li><a href="#">💡 Cum să îți îmbunătățești somnul</a></li>
+        <h2>📚 Resurse Psihologice</h2>
+        <p>Aici găsești ghiduri utile despre sănătatea mintală.</p>
+        <button onclick="toggleResources()">📖 Vezi resursele</button>
+        <ul id="resourcesList" style="display:none; margin-top: 10px;">
+            <li>📜 <a href="#">Ghid pentru gestionarea stresului</a></li>
+            <li>📘 <a href="#">Tehnici de relaxare</a></li>
+            <li>💡 <a href="#">Îmbunătățirea somnului</a></li>
         </ul>
     </section>
 
     <section class="container">
         <h2>👩‍⚕️ Despre Psiholog</h2>
-        <p>Dr. Maria Popescu, psiholog clinician specializat în terapie cognitiv-comportamentală.</p>
-        <p>📍 Cabinetul se află în centrul orașului, dar oferim și consultații online!</p>
+        <p><span class="highlight">Dr. Maria Popescu</span>, psiholog clinician cu experiență în terapii cognitiv-comportamentale.</p>
+        <p>📍 Cabinet situat în centrul orașului | 🖥️ Consultații online disponibile</p>
     </section>
 
     <section class="container">
@@ -81,14 +93,26 @@
     <section class="container">
         <h2>🔑 Ai fost la prima consultație?</h2>
         <p>Introdu codul unic primit pentru a crea un cont.</p>
-        <input type="text" id="clientCode" placeholder="Cod unic">
-        <button onclick="redirectToRegister()">🔓 Continuă</button>
+        <div class="flex">
+            <input type="text" id="clientCode" placeholder="Cod unic">
+            <button onclick="redirectToRegister()" class="button-primary">🔓 Continuă</button>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2>🔐 Acces Cont</h2>
+        <p>Dacă ai deja un cont, autentifică-te pentru a accesa funcționalitățile.</p>
+        <div class="flex">
+            <button onclick="window.location.href='login.html'" class="button-primary">🔑 Autentificare</button>
+            <button onclick="window.location.href='register.html'" class="button-primary">🆕 Înregistrare</button>
+        </div>
     </section>
 </main>
 
 <script>
-    function showResources() {
-        document.getElementById("resourcesList").style.display = "block";
+    function toggleResources() {
+        let list = document.getElementById("resourcesList");
+        list.style.display = list.style.display === "none" ? "block" : "none";
     }
 
     document.getElementById("appointmentForm").addEventListener("submit", function(event) {
@@ -107,7 +131,6 @@
             alert("Introdu un cod valid!");
         }
     }
-
 </script>
 
 </body>
