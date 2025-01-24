@@ -64,6 +64,7 @@
         </ul>
         <ul>
             <li><a href="#" onclick="showSection('journal')">Jurnal zilnic</a></li>
+            <li><a href="#" onclick="showSection('stats')">Grafic Emoțional</a></li>
             <li><a href="#" onclick="showSection('mood')">Monitorizare stare</a></li>
             <li><a href="#" onclick="showSection('appointments')">Programări</a></li>
             <li><a href="#" onclick="showSection('messages')">Mesaje</a></li>
@@ -72,7 +73,7 @@
         </ul>
         <a href="login.html" role="button">🔒 Deconectare</a>
     </nav>
-
+    
 <section id="stats" class="section">
     <h2>Grafic Emoțional</h2>
     <p>Vizualizează cum se schimbă emoțiile și intensitatea lor pe măsură ce îți restructurezi gândurile.</p>
@@ -154,6 +155,8 @@
     </main>
 
 
+    <script>
+        let chart;
 
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => {
@@ -217,10 +220,7 @@
             }
         }
 
-        <script>
-    let chart;
-
-    function saveJournal() {
+        function saveJournal() {
         let rows = document.querySelectorAll("#journalTable tbody tr");
         let initialEmotions = [];
         let initialIntensities = [];
