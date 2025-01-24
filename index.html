@@ -132,10 +132,9 @@
                 </thead>
                 <tbody></tbody>
             </table>
-           <button onclick="addEntry()">➕ Adaugă înregistrare</button>
-<button id="saveButton" onclick="saveJournal()" disabled>💾 Salvează</button>
-<p id="saveMessageJournal" style="color: green; display: none;">✅ Jurnal salvat cu succes!</p>
-
+            <button onclick="addEntry()">➕ Adaugă înregistrare</button>
+            <button onclick="saveJournal()">💾 Salvează</button>
+            <canvas id="moodChart"></canvas>
         </section>
 
         <section id="mood" class="section">
@@ -222,14 +221,11 @@
 
     for (let i = 0; i < columns.length; i++) {
         let newCell = newRow.insertCell(i);
-        let input;
 
         if (columns[i] === "Data") {
-            input = document.createElement("input");
-            input.type = "date";
+            newCell.innerHTML = `<input type="date">`;
         } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-            input = document.createElement("select");
-            input.innerHTML = `
+            newCell.innerHTML = `
     <select>
         <optgroup label="🌞 Emoții pozitive">
             <option>😃 Fericit</option>
@@ -267,44 +263,21 @@
     </select>
 `; 
                 
-               } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-            input = document.createElement("input");
-            input.type = "number";
-            input.min = 0;
-            input.max = 10;
-            input.placeholder = "0-10";
-        } else {
-            input = document.createElement("input");
-            input.type = "text";
-            input.placeholder = columns[i];
+                } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
+                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
+                } else {
+                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
+                }
+            }
         }
-
-        input.oninput = checkFormCompletion; // Verifică dacă toate câmpurile sunt completate
-        newCell.appendChild(input);
-    }
-
-    document.getElementById("saveButton").disabled = true; // Asigurăm că butonul rămâne dezactivat până la completare
-}
 
         function saveJournal() {
     let rows = document.querySelectorAll("#journalTable tbody tr");
-
-    rows.forEach(row => {
-        let inputs = row.querySelectorAll("input, select");
-        inputs.forEach(input => {
-            input.setAttribute("disabled", "true"); // Blochează editarea
-        });
-    });
-
-    document.getElementById("saveButton").disabled = true; // Dezactivează butonul „Salvează”
-
-    let saveMessage = document.getElementById("saveMessageJournal");
-    saveMessage.style.display = "block";
-    setTimeout(() => {
-        saveMessage.style.display = "none";
-    }, 3000);
-}
-
+    let dates = [];
+    let initialEmotions = [];
+    let initialIntensities = [];
+    let newEmotions = [];
+    let newIntensities = [];
 
     rows.forEach(row => {
         let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
@@ -323,22 +296,6 @@
     });
 
     updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
-}
-
-        function checkFormCompletion() {
-    let allFilled = true;
-    let rows = document.querySelectorAll("#journalTable tbody tr");
-
-    rows.forEach(row => {
-        let inputs = row.querySelectorAll("input, select");
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                allFilled = false;
-            }
-        });
-    });
-
-    document.getElementById("saveButton").disabled = !allFilled;
 }
 
 
