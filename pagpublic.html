@@ -8,66 +8,108 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
         }
-        header {
-            text-align: center;
-            padding: 40px;
+        /* Bara laterală */
+        nav {
+            width: 250px;
             background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        main {
-            max-width: 900px;
-            margin: auto;
+            display: flex;
+            flex-direction: column;
             padding: 20px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100%;
         }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        nav h2 {
+            text-align: center;
             margin-bottom: 20px;
         }
-        .button-primary {
-            background-color: #007bff;
-            color: white;
-            width: 100%;
+        nav ul {
+            list-style: none;
+            padding: 0;
         }
-        .highlight {
-            color: #007bff;
-            font-weight: bold;
+        nav ul li {
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-align: center;
+            transition: background 0.3s;
         }
-        .flex {
+        nav ul li:hover, .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        /* Conținut principal */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
-            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .section {
+            display: none;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .active-section {
+            display: block;
+        }
+        button {
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
-<header>🌿 Cabinet Psihologic</header>
+<!-- Bara laterală -->
+<nav>
+    <h2>🌿 Cabinet Psihologic</h2>
+    <ul>
+        <li onclick="showSection('home')" class="active">🏠 Acasă</li>
+        <li onclick="showSection('resources')">📚 Resurse</li>
+        <li onclick="showSection('about')">👩‍⚕️ Despre Psiholog</li>
+        <li onclick="showSection('appointments')">📅 Programări</li>
+        <li onclick="showSection('login')">🔐 Autentificare</li>
+    </ul>
+</nav>
 
+<!-- Conținut principal -->
 <main>
-    <section class="container">
+    <section id="home" class="section active-section">
+        <h2>Bine ai venit!</h2>
+        <p>Explorează resursele disponibile și fă o programare pentru prima consultație.</p>
+        <button onclick="showSection('appointments')">📅 Programează-te</button>
+    </section>
+
+    <section id="resources" class="section">
         <h2>📚 Resurse Psihologice</h2>
-        <p>Aici găsești ghiduri utile despre sănătatea mintală.</p>
-        <button onclick="toggleResources()">📖 Vezi resursele</button>
-        <ul id="resourcesList" style="display:none; margin-top: 10px;">
+        <p>Ghiduri utile despre sănătatea mintală.</p>
+        <button onclick="toggleResources()">📖 Vezi resurse</button>
+        <ul id="resourcesList" style="display:none;">
             <li>📜 <a href="#">Ghid pentru gestionarea stresului</a></li>
             <li>📘 <a href="#">Tehnici de relaxare</a></li>
             <li>💡 <a href="#">Îmbunătățirea somnului</a></li>
         </ul>
     </section>
 
-    <section class="container">
+    <section id="about" class="section">
         <h2>👩‍⚕️ Despre Psiholog</h2>
-        <p><span class="highlight">Dr. Maria Popescu</span>, psiholog clinician cu experiență în terapii cognitiv-comportamentale.</p>
-        <p>📍 Cabinet situat în centrul orașului | 🖥️ Consultații online disponibile</p>
+        <p><strong>Dr. Maria Popescu</strong>, psiholog clinician cu experiență.</p>
+        <p>📍 Cabinet în centrul orașului | 🖥️ Consultații online disponibile</p>
     </section>
 
-    <section class="container">
+    <section id="appointments" class="section">
         <h2>📅 Fă-ți o programare</h2>
         <form id="appointmentForm">
             <label for="name">Nume complet:</label>
@@ -82,33 +124,34 @@
             <label for="reason">Motivul vizitei:</label>
             <textarea id="reason" required></textarea>
 
-            <label for="dates">Alege zile disponibile:</label>
-            <input type="date" id="dates" required multiple>
+            <label for="dates">Alege o dată:</label>
+            <input type="date" id="dates" required>
 
-            <button type="submit" class="button-primary">📩 Trimite cererea</button>
+            <button type="submit">📩 Trimite cererea</button>
         </form>
-        <p id="confirmationMessage" style="display:none; color:green;">✅ Cererea ta a fost trimisă! Vei fi contactat în curând.</p>
+        <p id="confirmationMessage" style="display:none; color:green;">✅ Cererea ta a fost trimisă!</p>
     </section>
 
-    <section class="container">
-        <h2>🔑 Ai fost la prima consultație?</h2>
-        <p>Introdu codul unic primit pentru a crea un cont.</p>
-        <div class="flex">
-            <input type="text" id="clientCode" placeholder="Cod unic">
-            <button onclick="redirectToRegister()" class="button-primary">🔓 Continuă</button>
-        </div>
-    </section>
-
-    <section class="container">
+    <section id="login" class="section">
         <h2>🔐 Acces Cont</h2>
-        <p>Dacă ai deja un cont, autentifică-te pentru a accesa funcționalitățile.</p>
-        <div class="flex">
-            <button onclick="window.location.href='login.html'" class="button-primary">🔑 Autentificare</button>
-        </div>
+        <p>Dacă ai deja un cont, autentifică-te.</p>
+        <button onclick="window.location.href='login.html'">🔑 Autentificare</button>
     </section>
 </main>
 
 <script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active-section');
+        });
+        document.getElementById(sectionId).classList.add('active-section');
+
+        document.querySelectorAll("nav ul li").forEach(li => {
+            li.classList.remove("active");
+        });
+        document.querySelector(`nav ul li[onclick="showSection('${sectionId}')"]`).classList.add("active");
+    }
+
     function toggleResources() {
         let list = document.getElementById("resourcesList");
         list.style.display = list.style.display === "none" ? "block" : "none";
@@ -121,15 +164,6 @@
             document.getElementById("confirmationMessage").style.display = "none";
         }, 5000);
     });
-
-    function redirectToRegister() {
-        let code = document.getElementById("clientCode").value;
-        if (code.trim() !== "") {
-            window.location.href = "register.html?code=" + code;
-        } else {
-            alert("Introdu un cod valid!");
-        }
-    }
 </script>
 
 </body>
