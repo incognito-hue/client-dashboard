@@ -425,7 +425,28 @@ window.onload = function () {
     let initialIntensities = [];
     let newEmotions = [];
     let newIntensities = [];
+    let allFilled = true;
 
+    rows.forEach(row => {
+        let inputs = row.querySelectorAll("input, select");
+
+        // Verificăm dacă toate câmpurile sunt completate
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.border = "2px solid red"; // Evidențiem câmpurile goale
+            } else {
+                input.style.border = ""; // Resetăm borderul dacă este completat
+            }
+        });
+    });
+
+    if (!allFilled) {
+        alert("⚠️ Te rog să completezi toate câmpurile înainte de a salva!");
+        return;
+    }
+
+    // Dacă toate sunt completate, salvăm datele și le blocăm
     rows.forEach(row => {
         let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
         let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
@@ -440,9 +461,18 @@ window.onload = function () {
             newEmotions.push(newEmotion);
             newIntensities.push(parseInt(newIntensity));
         }
+
+        // Blocăm toate câmpurile după salvare
+        let inputs = row.querySelectorAll("input, select");
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
     });
 
+    // Actualizăm graficul emoțional
     updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
+
+    alert("✅ Jurnalul a fost salvat cu succes!");
 }
 
 
