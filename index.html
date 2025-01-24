@@ -81,24 +81,27 @@ nav ul li:hover, .active {
     background: white; /* Asigură vizibilitatea capului tabelului */
     z-index: 2;
 }
+        
 /* Efect pentru mărirea casetelor când sunt selectate */
 .table-container td input:focus,
 .table-container td select:focus,
 .table-container td textarea:focus {
-    font-size: 16px; /* Mărește fontul */
-    padding: 12px; /* Mărește spațierea */
-    border: 2px solid #007bff; /* Schimbă culoarea borderului */
+    transform: scale(1.2); /* Mărește dimensiunea */
+    font-size: 16px; /* Font mai mare */
+    padding: 12px; /* Spațiu interior mai mare */
+    border: 2px solid #007bff; /* Border evidențiat */
     outline: none; /* Elimină conturul standard */
-    background: rgba(0, 123, 255, 0.1); /* Adaugă un efect subtil */
-    transition: all 0.3s ease-in-out; /* Tranziție lină */
+    background: rgba(0, 123, 255, 0.1); /* Fundal subtil */
+    transition: all 0.2s ease-in-out; /* Tranziție lină */
 }
 
-/* Resetare la starea inițială */
+/* Resetare la starea inițială când pierzi focusul */
 .table-container td input,
 .table-container td select,
 .table-container td textarea {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
+
 
 
 /* Conținut principal */
