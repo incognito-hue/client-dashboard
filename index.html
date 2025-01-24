@@ -71,7 +71,7 @@
             <li><a href="#" onclick="showSection('billing')">Plăți</a></li>
             <li><a href="#" onclick="showSection('resources')">Resurse</a></li>
         </ul>
-        <a href="login.html" role="button">🔒 Deconectare</a>
+<a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
     </nav>
     
 <section id="stats" class="section">
@@ -311,11 +311,21 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
         }
     });
 }
-
-
-
 </script>
 
+<script>
+    function logout() {
+        localStorage.removeItem("loggedIn"); // Ștergem autentificarea
+        window.location.href = "login.html"; // Redirecționează către pagina de Log In
+    }
+
+    // Verifică dacă utilizatorul este autentificat
+    window.onload = function () {
+        if (!localStorage.getItem("loggedIn")) {
+            window.location.href = "login.html"; // Dacă nu e logat, redirecționează la Log In
+        }
+    };
+</script>
 
 </body>
 </html>
