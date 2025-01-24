@@ -158,33 +158,40 @@ main {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-
-
-
 /* Stilizare tabel */
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px; /* Dimensiune uniformă */
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
+/* Capul tabelului */
 th {
     background: #007bff;
     color: white;
+    font-weight: bold;
+    font-size: 15px; /* Ușor mai mare decât restul */
+    padding: 10px;
 }
 
+/* Celulele tabelului */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px; /* Același font ca restul textului */
+}
+
+/* Stil pentru câmpurile din tabel */
 td input, td select {
     width: 100%;
-    padding: 5px;
+    padding: 8px;
     border: none;
     background: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
+    font-size: 14px; /* Uniformizat cu restul tabelului */
 }
+
     </style>
     
 </head>
