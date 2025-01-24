@@ -1,21 +1,196 @@
-function showSection(sectionId) {
-    // Ascunde toate secțiunile
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active-section');
-    });
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cabinet Psihologic</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        /* Bara laterală pe dreapta */
+        nav {
+            width: 80px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100%;
+            align-items: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+        nav ul li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+            font-size: 14px;
+        }
+        nav ul li i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        nav ul li:hover, .active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        /* Conținut principal */
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .section {
+            display: none;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .active-section {
+            display: block;
+        }
+        button {
+            width: 100%;
+        }
+    </style>
+    <!-- Font Awesome pentru pictograme -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
 
-    // Afișează secțiunea selectată
-    let selectedSection = document.getElementById(sectionId);
-    if (selectedSection) {
-        selectedSection.classList.add('active-section');
+<!-- Bara laterală verticală cu pictograme -->
+<nav>
+    <ul>
+        <li onclick="showSection('home')" class="active">
+            <i class="fas fa-home"></i>
+            <span>Acasă</span>
+        </li>
+        <li onclick="showSection('resources')">
+            <i class="fas fa-book"></i>
+            <span>Resurse</span>
+        </li>
+        <li onclick="showSection('about')">
+            <i class="fas fa-user-md"></i>
+            <span>Psiholog</span>
+        </li>
+        <li onclick="showSection('appointments')">
+            <i class="fas fa-calendar-check"></i>
+            <span>Programări</span>
+        </li>
+        <li onclick="showSection('login')">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Autentificare</span>
+        </li>
+    </ul>
+</nav>
+
+<!-- Conținut principal -->
+<main>
+    <section id="home" class="section active-section">
+        <h2>Bine ai venit!</h2>
+        <p>Explorează resursele disponibile și fă o programare pentru prima consultație.</p>
+        <button onclick="showSection('appointments')">📅 Programează-te</button>
+    </section>
+
+    <section id="resources" class="section">
+        <h2>📚 Resurse Psihologice</h2>
+        <p>Ghiduri utile despre sănătatea mintală.</p>
+        <button onclick="toggleResources()">📖 Vezi resurse</button>
+        <ul id="resourcesList" style="display:none;">
+            <li>📜 <a href="#">Ghid pentru gestionarea stresului</a></li>
+            <li>📘 <a href="#">Tehnici de relaxare</a></li>
+            <li>💡 <a href="#">Îmbunătățirea somnului</a></li>
+        </ul>
+    </section>
+
+    <section id="about" class="section">
+        <h2>👩‍⚕️ Despre Psiholog</h2>
+        <p><strong>Dr. Maria Popescu</strong>, psiholog clinician cu experiență.</p>
+        <p>📍 Cabinet în centrul orașului | 🖥️ Consultații online disponibile</p>
+    </section>
+
+    <section id="appointments" class="section">
+        <h2>📅 Fă-ți o programare</h2>
+        <form id="appointmentForm">
+            <label for="name">Nume complet:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Telefon:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="reason">Motivul vizitei:</label>
+            <textarea id="reason" required></textarea>
+
+            <label for="dates">Alege o dată:</label>
+            <input type="date" id="dates" required>
+
+            <button type="submit">📩 Trimite cererea</button>
+        </form>
+        <p id="confirmationMessage" style="display:none; color:green;">✅ Cererea ta a fost trimisă!</p>
+    </section>
+
+    <section id="login" class="section">
+        <h2>🔐 Acces Cont</h2>
+        <p>Dacă ai deja un cont, autentifică-te.</p>
+        <button onclick="window.location.href='login.html'">🔑 Autentificare</button>
+    </section>
+</main>
+
+<script>
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active-section');
+        });
+        document.getElementById(sectionId).classList.add('active-section');
+
+        document.querySelectorAll("nav ul li").forEach(li => {
+            li.classList.remove("active");
+        });
+        document.querySelector(`nav ul li[onclick="showSection('${sectionId}')"]`).classList.add("active");
     }
 
-    // Evidențiază meniul activ
-    document.querySelectorAll("nav ul li").forEach(li => {
-        li.classList.remove("active");
-    });
-    let activeMenu = document.querySelector(`nav ul li[onclick="showSection('${sectionId}')"]`);
-    if (activeMenu) {
-        activeMenu.classList.add("active");
+    function toggleResources() {
+        let list = document.getElementById("resourcesList");
+        list.style.display = list.style.display === "none" ? "block" : "none";
     }
-}
+
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        document.getElementById("confirmationMessage").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("confirmationMessage").style.display = "none";
+        }, 5000);
+    });
+</script>
+
+</body>
+</html>
