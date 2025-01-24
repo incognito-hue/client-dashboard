@@ -14,38 +14,34 @@
         }
         /* Bara laterală pe dreapta */
         nav {
-            width: 80px;
+            width: 250px;
             background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
             display: flex;
             flex-direction: column;
-            padding: 10px;
+            padding: 20px;
             position: fixed;
             right: 0;
             top: 0;
             height: 100%;
             align-items: center;
         }
+        nav h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         nav ul {
             list-style: none;
             padding: 0;
             width: 100%;
-            margin-top: 20px;
         }
         nav ul li {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             padding: 15px;
             cursor: pointer;
             border-radius: 8px;
+            text-align: center;
             transition: background 0.3s;
-            font-size: 14px;
-        }
-        nav ul li i {
-            font-size: 24px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         nav ul li:hover, .active {
             background: rgba(255, 255, 255, 0.3);
@@ -79,34 +75,18 @@
             width: 100%;
         }
     </style>
-    <!-- Font Awesome pentru pictograme -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<!-- Bara laterală verticală cu pictograme -->
+<!-- Bara laterală verticală -->
 <nav>
+    <h2>🌿 Cabinet Psihologic</h2>
     <ul>
-        <li onclick="showSection('home')" class="active">
-            <i class="fas fa-home"></i>
-            <span>Acasă</span>
-        </li>
-        <li onclick="showSection('resources')">
-            <i class="fas fa-book"></i>
-            <span>Resurse</span>
-        </li>
-        <li onclick="showSection('about')">
-            <i class="fas fa-user-md"></i>
-            <span>Psiholog</span>
-        </li>
-        <li onclick="showSection('appointments')">
-            <i class="fas fa-calendar-check"></i>
-            <span>Programări</span>
-        </li>
-        <li onclick="showSection('login')">
-            <i class="fas fa-sign-in-alt"></i>
-            <span>Autentificare</span>
-        </li>
+        <li onclick="showSection('home')" class="active">🏠 Acasă</li>
+        <li onclick="showSection('resources')">📚 Resurse</li>
+        <li onclick="showSection('about')">👩‍⚕️ Despre Psiholog</li>
+        <li onclick="showSection('appointments')">📅 Programări</li>
+        <li onclick="showSection('login')">🔐 Autentificare</li>
     </ul>
 </nav>
 
