@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cabinet Psihologic</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header {
+            text-align: center;
+            padding: 40px;
+            background: #007bff;
+            color: white;
+            font-size: 1.8em;
+        }
+        main {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .button-primary {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>🌿 Cabinet Psihologic</header>
+
+<main>
+    <section class="container">
+        <h2>🧠 Resurse Psihologice</h2>
+        <p>Aici găsești articole și ghiduri utile despre sănătatea mintală.</p>
+        <button onclick="showResources()">📖 Vezi resursele</button>
+        <ul id="resourcesList" style="display:none;">
+            <li><a href="#">📜 Ghid pentru gestionarea stresului</a></li>
+            <li><a href="#">📘 Tehnici de relaxare</a></li>
+            <li><a href="#">💡 Cum să îți îmbunătățești somnul</a></li>
+        </ul>
+    </section>
+
+    <section class="container">
+        <h2>👩‍⚕️ Despre Psiholog</h2>
+        <p>Dr. Maria Popescu, psiholog clinician specializat în terapie cognitiv-comportamentală.</p>
+        <p>📍 Cabinetul se află în centrul orașului, dar oferim și consultații online!</p>
+    </section>
+
+    <section class="container">
+        <h2>📅 Fă-ți o programare</h2>
+        <form id="appointmentForm">
+            <label for="name">Nume complet:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Telefon:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="reason">Motivul vizitei:</label>
+            <textarea id="reason" required></textarea>
+
+            <label for="dates">Alege zile disponibile:</label>
+            <input type="date" id="dates" required multiple>
+
+            <button type="submit" class="button-primary">📩 Trimite cererea</button>
+        </form>
+        <p id="confirmationMessage" style="display:none; color:green;">✅ Cererea ta a fost trimisă! Vei fi contactat în curând.</p>
+    </section>
+
+    <section class="container">
+        <h2>🔑 Ai fost la prima consultație?</h2>
+        <p>Introdu codul unic primit pentru a crea un cont.</p>
+        <input type="text" id="clientCode" placeholder="Cod unic">
+        <button onclick="redirectToRegister()">🔓 Continuă</button>
+    </section>
+</main>
+
+<script>
+    function showResources() {
+        document.getElementById("resourcesList").style.display = "block";
+    }
+
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        document.getElementById("confirmationMessage").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("confirmationMessage").style.display = "none";
+        }, 5000);
+    });
+
+    function redirectToRegister() {
+        let code = document.getElementById("clientCode").value;
+        if (code.trim() !== "") {
+            window.location.href = "register.html?code=" + code;
+        } else {
+            alert("Introdu un cod valid!");
+        }
+    }
+</script>
+
+</body>
+</html>
