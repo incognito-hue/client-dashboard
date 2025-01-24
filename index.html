@@ -11,77 +11,82 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-        }
-        nav ul li a.active {
-    background-color: #007bff;
-    color: white !important;
-    padding: 8px 15px;
-    border-radius: 5px;
-}       main {
-            margin-top: 80px;
-            padding: 20px;
-        }
-        .section {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-        canvas {
-            max-width: 100%;
-            height: 300px;
-            margin-top: 20px;
-        }
+       /* Bara laterală pe dreapta */
+nav {
+    width: 250px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    z-index: 1000;
+}
+
+       /* Meniul vertical */
+nav ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+        
+       nav ul li {
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+nav ul li:hover, .active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Conținut principal */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    margin-right: 260px; /* Asigurăm spațiu pentru bara laterală */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; /* Spațiu între secțiuni */
+}
+
+.section {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
     </style>
 </head>
 <body>
 
-    <nav>
-        <ul>
-            <li><strong>Client Dashboard</strong></li>
-        </ul>
-        <ul>
-           <li><a href="#" onclick="showSection('journal', this)">Jurnal zilnic</a></li>
-<li><a href="#" onclick="showSection('stats', this)">Grafic Emoțional</a></li>
-<li><a href="#" onclick="showSection('mood', this)">Monitorizare stare</a></li>
-<li><a href="#" onclick="showSection('appointments', this)">Programări</a></li>
-<li><a href="#" onclick="showSection('messages', this)">Mesaje</a></li>
-<li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
-<li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
-<li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
-<li><a href="#" onclick="showSection('account')">Contul meu</a></li>
+<nav>
+    <h2>🌿 Dashboard</h2>
+    <ul>
+        <li onclick="showSection('journal', this)">📖 Jurnal zilnic</li>
+        <li onclick="showSection('stats', this)">📊 Grafic Emoțional</li>
+        <li onclick="showSection('mood', this)">😊 Monitorizare stare</li>
+        <li onclick="showSection('appointments', this)">📅 Programări</li>
+        <li onclick="showSection('messages', this)">💬 Mesaje</li>
+        <li onclick="showSection('billing', this)">💳 Plăți</li>
+        <li onclick="showSection('questionnaires', this)">📝 Chestionare</li>
+        <li onclick="showSection('resources', this)">📚 Resurse</li>
+        <li onclick="showSection('account', this)">👤 Contul meu</li>
+    </ul>
+    <button onclick="logout()">🔒 Deconectare</button>
+</nav>
 
-
-        </ul>
-<a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
-    </nav>
     
 <section id="stats" class="section">
     <h2>Grafic Emoțional</h2>
