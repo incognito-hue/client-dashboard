@@ -104,6 +104,26 @@
             <button id="saveButton" onclick="saveJournal()" disabled>💾 Salvează</button>
             <p id="saveMessageJournal" style="color: green; display: none;">✅ Jurnal salvat cu succes!</p>
         </section>
+
+        <section id="mood" class="section">
+            <h2>Monitorizare stare</h2>
+            <p>Îți poți urmări starea emoțională zilnic.</p>
+            <input type="date">
+            <select>
+                <option>😊 Foarte bine</option>
+                <option>😐 Normal</option>
+                <option>😞 Trist</option>
+                <option>😢 Foarte trist</option>
+            </select>
+            <button>Salvează</button>
+        </section>
+
+        <section id="appointments" class="section">
+            <h2>Programări</h2>
+            <input type="date">
+            <textarea placeholder="Motivul programării..."></textarea>
+            <button>Programează-te</button>
+        </section>
     </main>
 
     <script>
@@ -136,25 +156,9 @@
                 if (columns[i] === "Data") {
                     input = document.createElement("input");
                     input.type = "date";
-                } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-                    input = document.createElement("select");
-                    input.innerHTML = `
-                        <option value="">--Selectează emoția--</option>
-                        <option>😃 Fericit</option>
-                        <option>😊 Împlinit</option>
-                        <option>😞 Trist</option>
-                        <option>😠 Furios</option>
-                    `;
-                } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-                    input = document.createElement("input");
-                    input.type = "number";
-                    input.min = 0;
-                    input.max = 10;
-                    input.placeholder = "0-10";
                 } else {
                     input = document.createElement("input");
                     input.type = "text";
-                    input.placeholder = columns[i];
                 }
 
                 input.oninput = checkFormCompletion;
@@ -169,9 +173,9 @@
             let rows = document.querySelectorAll("#journalTable tbody tr");
 
             rows.forEach(row => {
-                let inputs = row.querySelectorAll("input, select");
+                let inputs = row.querySelectorAll("input");
                 inputs.forEach(input => {
-                    if (input.value.trim() === "" || input.value === "--Selectează emoția--") {
+                    if (input.value.trim() === "") {
                         allFilled = false;
                     }
                 });
@@ -184,7 +188,7 @@
             let rows = document.querySelectorAll("#journalTable tbody tr");
 
             rows.forEach(row => {
-                let inputs = row.querySelectorAll("input, select");
+                let inputs = row.querySelectorAll("input");
                 inputs.forEach(input => {
                     input.setAttribute("disabled", "true");
                 });
