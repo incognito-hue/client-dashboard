@@ -100,7 +100,7 @@
             font-size: 14px;
         }
 
-        /* 🔹 Efect de mărire pentru input/select la focus */
+        /* 🔹 Mărirea casetelor când sunt selectate */
         td input, td select, td textarea {
             width: 100%;
             padding: 8px;
@@ -108,13 +108,19 @@
             background: rgba(0, 0, 0, 0.05);
             border-radius: 5px;
             font-size: 14px;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        td textarea {
+            resize: vertical; /* Permite extinderea manuală doar vertical */
+            min-height: 30px;
+            max-height: 150px;
         }
 
         td input:focus, 
         td select:focus, 
         td textarea:focus {
-            transform: scale(1.2); /* Mărește câmpul */
+            transform: scale(1.05); /* Se mărește ușor */
             font-size: 16px;
             padding: 12px;
             border: 2px solid #007bff;
@@ -191,7 +197,7 @@
             } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
                 newCell.innerHTML = `<input type="number" min="0" max="10">`;
             } else {
-                newCell.innerHTML = `<input type="text">`;
+                newCell.innerHTML = `<textarea rows="1"></textarea>`; /* Modificat pentru text */
             }
         }
     }
@@ -199,7 +205,7 @@
     function saveJournal() {
         let rows = document.querySelectorAll("#journalTable tbody tr");
         rows.forEach(row => {
-            let inputs = row.querySelectorAll("input, select");
+            let inputs = row.querySelectorAll("input, select, textarea");
             let allFilled = true;
 
             inputs.forEach(input => {
@@ -225,9 +231,6 @@
             section.classList.remove('active');
         });
         document.getElementById(sectionId).classList.add('active');
-
-        document.querySelectorAll("nav ul li").forEach(li => li.classList.remove("active"));
-        if (element) element.classList.add("active");
     }
 
     function logout() {
