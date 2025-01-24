@@ -213,26 +213,88 @@
             }
         }
 
-        function saveJournal() {
-            let rows = document.querySelectorAll("#journalTable tbody tr");
-            let emotions = [], intensities = [];
+       function saveJournal() {
+        let rows = document.querySelectorAll("#journalTable tbody tr");
+        let initialEmotions = [];
+        let initialIntensities = [];
+        let newEmotions = [];
+        let newIntensities = [];
 
-            rows.forEach(row => {
-                let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
-                let intensity = row.cells[4]?.querySelector("input")?.value || 0;
-                emotions.push(emotion);
-                intensities.push(intensity);
-            });
+          rows.forEach(row => {
+            let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
+            let intensity = row.cells[4]?.querySelector("input")?.value || 0;
+            let newEmotion = row.cells[6]?.querySelector("select")?.value || "N/A";
+            let newIntensity = row.cells[7]?.querySelector("input")?.value || 0;
 
-            updateChart(emotions, intensities);
+            initialEmotions.push(emotion);
+            initialIntensities.push(parseInt(intensity));
+            newEmotions.push(newEmotion);
+            newIntensities.push(parseInt(newIntensity));
+        });
+
+            updateChart(initialEmotions, initialIntensities, newEmotions, newIntensities);
+    }
+
+        function updateChart(initialEmotions, initialIntensities, newEmotions, newIntensities) {
+        let ctx = document.getElementById("moodChart").getContext("2d");
+
+        if (chart) {
+            chart.destroy(); // Ștergem graficul vechi înainte de a crea unul nou
         }
 
-        function updateChart(emotions, intensities) {
-            let ctx = document.getElementById("moodChart").getContext("2d");
-            if (chart) chart.destroy();
-            chart = new Chart(ctx, { type: "bar", data: { labels: emotions, datasets: [{ label: "Intensitate Emoțională", data: intensities, backgroundColor: ["red", "blue", "yellow", "green", "purple"], borderWidth: 1 }] } });
-        }
-    </script>
+        chart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: initialEmotions,
+                datasets: [
+                    {
+                        label: "Emoție inițială",
+                        data: initialIntensities,
+                        borderColor: "red",
+                        backgroundColor: "rgba(255, 99, 132, 0.2)",
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: "Noua Emoție",
+                        data: newIntensities,
+                        borderColor: "green",
+                        backgroundColor: "rgba(75, 192, 192, 0.2)",
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Evoluția Emoțiilor după Restructurare",
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        display: true,
+                        position: "top"
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: "Intensitate Emoțională (0-10)"
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
 
 
 </body>
