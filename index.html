@@ -148,31 +148,6 @@
         </section>
     </main>
 
-     <script>
-    function toggleCustomMood() {
-        let select = document.getElementById("moodSelect");
-        let customInput = document.getElementById("customMoodInput");
-        
-        if (select.value === "custom") {
-            customInput.style.display = "block";
-        } else {
-            customInput.style.display = "none";
-        }
-    }
-
-    function saveMood() {
-        let select = document.getElementById("moodSelect");
-        let customInput = document.getElementById("customMoodInput");
-        let chosenMood = select.value === "custom" ? customInput.value : select.value;
-
-        if (chosenMood.trim() === "") {
-            alert("Te rog să introduci o stare emoțională!");
-            return;
-        }
-
-        alert("Starea emoțională salvată: " + chosenMood);
-    }
-</script>
 
     <script>
         let chart;
@@ -223,6 +198,31 @@
         }
     </script>
 
+ <script>
+    function toggleCustomMood() {
+        let select = document.getElementById("moodSelect");
+        let customInput = document.getElementById("customMoodInput");
+        
+        if (select.value === "custom") {
+            customInput.style.display = "block";
+        } else {
+            customInput.style.display = "none";
+        }
+    }
+
+    function saveMood() {
+        let select = document.getElementById("moodSelect");
+        let customInput = document.getElementById("customMoodInput");
+        let chosenMood = select.value === "custom" ? customInput.value : select.value;
+
+        if (chosenMood.trim() === "") {
+            alert("Te rog să introduci o stare emoțională!");
+            return;
+        }
+
+        alert("Starea emoțională salvată: " + chosenMood);
+    }
+</script>
 
 </body>
 </html>
