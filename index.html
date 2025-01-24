@@ -11,14 +11,21 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-      /* Meniul vertical */
-nav ul {
-    list-style: none;
-    padding: 0;
-    width: 100%;
+       /* Bara laterală pe dreapta */
+nav {
+    width: 250px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
     display: flex;
-    flex-direction: column; /* Așează elementele pe verticală */
-    align-items: center; /* Aliniere centrală */
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    z-index: 1000;
 }
 
        /* Meniul vertical */
@@ -35,7 +42,6 @@ nav ul {
     transition: background 0.3s;
     margin-bottom: 10px;
     text-align: center;
-    width: 100%; /* Face fiecare element să ocupe întreaga lățime a meniului */
 }
 
 nav ul li:hover, .active {
