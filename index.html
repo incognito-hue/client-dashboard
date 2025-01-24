@@ -130,15 +130,63 @@ main {
 .active-section {
     display: block;
 }
-/* Încadrare tabel */
+/* Încadrare tabel mai mare */
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Scroll orizontal doar dacă este necesar */
-    background: white; /* Asigură că este vizibil */
-    padding: 10px;
+    max-width: 900px; /* Crește dimensiunea maximă */
+    max-height: 600px; /* Mai mult spațiu pentru tabel */
+    overflow-y: auto; /* Scroll doar vertical pe conținutul tabelului */
+    background: white;
+    padding: 20px; /* Mai mult spațiu în jur */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
+
+/* Fixăm capul tabelului pentru scroll */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Evită alinierea greșită */
+}
+
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Stilizare tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px; /* Text mai mare pentru ușurință */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px; /* Mai mult spațiu în celule */
+    text-align: left;
+}
+
+th {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+/* Stil pentru câmpurile din tabel */
+td input, td select {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    font-size: 14px; /* Crește lizibilitatea */
+}
+
 
 /* Stilizare tabel */
 table {
@@ -164,8 +212,8 @@ td input, td select {
     background: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
 }
-
     </style>
+    
 </head>
 <body>
 
