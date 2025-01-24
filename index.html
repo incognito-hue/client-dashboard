@@ -11,7 +11,6 @@
             margin: 0;
             font-family: Arial, sans-serif;
         }
-
         nav {
             position: fixed;
             top: 0;
@@ -31,13 +30,6 @@
             display: flex;
             gap: 15px;
         }
-        nav ul li a.active {
-    background-color: #007bff;
-    color: white !important;
-    padding: 8px 15px;
-    border-radius: 5px;
-}
-
         main {
             margin-top: 80px;
             padding: 20px;
@@ -67,21 +59,21 @@
 <body>
 
     <nav>
-    <ul>
-        <li><strong>Client Dashboard</strong></li>
-    </ul>
-    <ul>
-        <li><a href="#" onclick="showSection('journal', this)">Jurnal zilnic</a></li>
-        <li><a href="#" onclick="showSection('mood', this)">Monitorizare stare</a></li>
-        <li><a href="#" onclick="showSection('appointments', this)">Programări</a></li>
-        <li><a href="#" onclick="showSection('questionnaires', this)">Chestionare</a></li>
-        <li><a href="#" onclick="showSection('messages', this)">Mesaje</a></li>
-        <li><a href="#" onclick="showSection('billing', this)">Plăți</a></li>
-        <li><a href="#" onclick="showSection('resources', this)">Resurse</a></li>
-    </ul>
-    <a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
-</nav>
-
+        <ul>
+            <li><strong>Client Dashboard</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#" onclick="showSection('journal')">Jurnal zilnic</a></li>
+            <li><a href="#" onclick="showSection('stats')">Grafic Emoțional</a></li>
+            <li><a href="#" onclick="showSection('mood')">Monitorizare stare</a></li>
+            <li><a href="#" onclick="showSection('appointments')">Programări</a></li>
+            <li><a href="#" onclick="showSection('messages')">Mesaje</a></li>
+            <li><a href="#" onclick="showSection('billing')">Plăți</a></li>
+            <li><a href="#" onclick="showSection('questionnaires')">Chestionare</a></li>
+            <li><a href="#" onclick="showSection('resources')">Resurse</a></li>
+        </ul>
+<a href="#" role="button" onclick="logout()">🔒 Deconectare</a>
+    </nav>
     
 <section id="stats" class="section">
     <h2>Grafic Emoțional</h2>
@@ -393,46 +385,6 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
     };
 </script>
 
-<script>
-    function showSection(sectionId, element) {
-        // Ascunde toate secțiunile
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-
-        // Afișează secțiunea selectată
-        document.getElementById(sectionId).classList.add('active');
-
-        // Elimină clasa 'active' din toate linkurile de navigare
-        document.querySelectorAll("nav ul li a").forEach(link => {
-            link.classList.remove("active");
-        });
-
-        // Adaugă clasa 'active' la linkul curent
-        if (element) {
-            element.classList.add("active");
-        }
-
-        // Salvăm secțiunea curentă în localStorage pentru a o reține la refresh
-        localStorage.setItem("currentSection", sectionId);
-    }
-
-    // La încărcarea paginii, verificăm ce secțiune a fost vizitată ultima dată
-    window.onload = function () {
-        let savedSection = localStorage.getItem("currentSection");
-        if (savedSection) {
-            let activeLink = document.querySelector(`nav ul li a[onclick*="${savedSection}"]`);
-            showSection(savedSection, activeLink);
-        } else {
-            showSection('journal', document.querySelector('nav ul li a'));
-        }
-
-        // Verificăm autentificarea utilizatorului
-        if (!localStorage.getItem("loggedIn")) {
-            window.location.href = "login.html";
-        }
-    };
-</script>
 
 </body>
 </html>
