@@ -117,7 +117,7 @@
                 <option>💔 Deprimat</option>
                 <option>🤯 Stresat</option>
             </select>
-                <input type="text" id="customMoodInput" placeholder="Introdu altă stare..." style="display:none; margin-top:10px;">
+    <input type="text" id="customMoodInput" placeholder="Introdu altă stare..." style="display:none; margin-top:10px;">
             <button>Salvează</button>
         </section>
 
@@ -197,7 +197,7 @@
         }
     </script>
 
-    <script>
+   <script>
     function toggleCustomMood() {
         let select = document.getElementById("moodSelect");
         let customInput = document.getElementById("customMoodInput");
@@ -208,7 +208,21 @@
             customInput.style.display = "none";
         }
     }
+
+    function saveMood() {
+        let select = document.getElementById("moodSelect");
+        let customInput = document.getElementById("customMoodInput");
+        let chosenMood = select.value === "custom" ? customInput.value : select.value;
+
+        if (chosenMood.trim() === "") {
+            alert("Te rog să introduci o stare emoțională!");
+            return;
+        }
+
+        alert("Starea emoțională salvată: " + chosenMood);
+    }
 </script>
+
 
 
 </body>
