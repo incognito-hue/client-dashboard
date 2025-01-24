@@ -134,7 +134,7 @@
             </table>
             <button onclick="addEntry()">➕ Adaugă înregistrare</button>
             <button onclick="saveJournal()">💾 Salvează</button>
-<p id="saveMessageJournal" style="color: green; display: none;">✅ Jurnal salvat cu succes!</p>
+            <canvas id="moodChart"></canvas>
         </section>
 
         <section id="mood" class="section">
@@ -272,11 +272,12 @@
         }
 
         function saveJournal() {
-    let saveMessage = document.getElementById("saveMessageJournal");
-    saveMessage.style.display = "block"; // Afișează mesajul
-    setTimeout(() => {
-        saveMessage.style.display = "none"; // Ascunde mesajul după 3 secunde
-    }, 3000);
+    let rows = document.querySelectorAll("#journalTable tbody tr");
+    let dates = [];
+    let initialEmotions = [];
+    let initialIntensities = [];
+    let newEmotions = [];
+    let newIntensities = [];
 
     rows.forEach(row => {
         let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
