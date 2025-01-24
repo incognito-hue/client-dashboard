@@ -106,7 +106,18 @@
                 <option>😐 Normal</option>
                 <option>😞 Trist</option>
                 <option>😢 Foarte trist</option>
+                <option>😐 Neutru</option>
+                <option>🤔 Gânditor</option>
+                <option>😶 Detașat</option>
+                <option>😞 Trist</option>
+                <option>😢 Melancolic</option>
+                <option>😠 Furios</option>
+                <option>😰 Anxios</option>
+                <option>🥺 Copleșit</option>
+                <option>💔 Deprimat</option>
+                <option>🤯 Stresat</option>
             </select>
+                <input type="text" id="customMoodInput" placeholder="Introdu altă stare..." style="display:none; margin-top:10px;">
             <button>Salvează</button>
         </section>
 
@@ -185,6 +196,20 @@
             chart = new Chart(ctx, { type: "bar", data: { labels: emotions, datasets: [{ label: "Intensitate Emoțională", data: intensities, backgroundColor: ["red", "blue", "yellow", "green", "purple"], borderWidth: 1 }] } });
         }
     </script>
+
+    <script>
+    function toggleCustomMood() {
+        let select = document.getElementById("moodSelect");
+        let customInput = document.getElementById("customMoodInput");
+        
+        if (select.value === "custom") {
+            customInput.style.display = "block";
+        } else {
+            customInput.style.display = "none";
+        }
+    }
+</script>
+
 
 </body>
 </html>
