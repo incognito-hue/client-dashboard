@@ -59,11 +59,10 @@ nav ul li:hover, .active {
 
 .table-container {
     width: 100%;
-    max-width: 900px; /* Crește lățimea */
-    max-height: 600px; /* Crește înălțimea */
-    overflow-y: auto; /* Permite scroll pe înălțime */
+    max-height: 500px; /* Ajustează înălțimea maximă a containerului */
+    overflow-y: auto; /* Scroll doar pe conținutul tabelului */
     background: white;
-    padding: 20px; /* Adaugă mai mult spațiu în interior */
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     position: relative;
@@ -131,78 +130,42 @@ main {
 .active-section {
     display: block;
 }
-/* Încadrare tabel mai mare */
+/* Încadrare tabel */
 .table-container {
     width: 100%;
-    max-width: 900px; /* Crește dimensiunea maximă */
-    max-height: 600px; /* Mai mult spațiu pentru tabel */
-    overflow-y: auto; /* Scroll doar vertical pe conținutul tabelului */
-    background: white;
-    padding: 20px; /* Mai mult spațiu în jur */
+    overflow-x: auto; /* Scroll orizontal doar dacă este necesar */
+    background: white; /* Asigură că este vizibil */
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-/* Fixăm capul tabelului pentru scroll */
-.table-container table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed; /* Evită alinierea greșită */
-}
-
-.table-container thead {
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 2;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Stilizare tabel */
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px; /* Dimensiune uniformă */
 }
 
-/* Capul tabelului */
-th {
-    background: #007bff;
-    color: white;
-    font-weight: bold;
-    font-size: 14px; /* Ușor mai mare decât restul */
-    padding: 10px;
-}
-
-/* Celulele tabelului */
-td {
+th, td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
-    font-size: 14px; /* Același font ca restul textului */
 }
 
-/* Stil pentru câmpurile din tabel */
-#journal .table-container td input, 
-#journal .table-container td select {
+th {
+    background: #007bff;
+    color: white;
+}
+
+td input, td select {
     width: 100%;
-    padding: 6px;
-    border: 1px solid #ccc;
-    transition: all 0.3s ease-in-out; /* Tranziție lină */
+    padding: 5px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
 }
-
-#journal .table-container td input:focus, 
-#journal .table-container td select:focus {
-    font-size: 15px; /* Se mărește textul */
-    padding: 10px; /* Crește spațierea */
-    border: 2px solid #007bff; /* Evidențiere la focus */
-    outline: none;
-}
-
 
     </style>
-    
 </head>
 <body>
 
@@ -462,31 +425,7 @@ window.onload = function () {
     let initialIntensities = [];
     let newEmotions = [];
     let newIntensities = [];
-    let allFilled = true;
 
-    rows.forEach(row => {
-    let inputs = row.querySelectorAll("input, select");
-    let allFilled = true;
-
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-            allFilled = false;
-        }
-    });
-
-    if (allFilled) {
-        row.style.backgroundColor = "#d4edda"; // Verde deschis pentru zi completată
-    }
-});
-
-    });
-
-    if (!allFilled) {
-        alert("⚠️ Te rog să completezi toate câmpurile înainte de a salva!");
-        return;
-    }
-
-    // Dacă toate sunt completate, salvăm datele și le blocăm
     rows.forEach(row => {
         let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
         let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
@@ -501,18 +440,9 @@ window.onload = function () {
             newEmotions.push(newEmotion);
             newIntensities.push(parseInt(newIntensity));
         }
-
-        // Blocăm toate câmpurile după salvare
-        let inputs = row.querySelectorAll("input, select");
-        inputs.forEach(input => {
-            input.disabled = true;
-        });
     });
 
-    // Actualizăm graficul emoțional
     updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
-
-    alert("✅ Jurnalul a fost salvat cu succes!");
 }
 
 
@@ -680,3 +610,4 @@ function toggleResources() {
 
 </body>
 </html>
+
