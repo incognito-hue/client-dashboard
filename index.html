@@ -6,7 +6,6 @@
     <title>Client Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <style>
         body {
             margin: 0;
@@ -419,20 +418,14 @@ window.onload = function () {
     showSection(savedSection, activeLink);
 };
 
-       function addEntry() {
-    let tableBody = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
-
-    // Creăm un container pentru fiecare rând (tabel + buton)
-    let rowContainer = document.createElement("div");
-    rowContainer.classList.add("row-container"); // Aplicăm stilul flex
-
-    // Creăm un rând nou în tabel
-    let newRow = document.createElement("tr");
+        function addEntry() {
+    let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+    let newRow = table.insertRow();
 
     let columns = ["Data", "Situația", "Gânduri", "Emoție", "Sentimente (0-10)", "Gânduri alternative", "Noua Emoție", "Noi Sentimente (0-10)"];
 
     for (let i = 0; i < columns.length; i++) {
-        let newCell = document.createElement("td");
+        let newCell = newRow.insertCell(i);
 
         if (columns[i] === "Data") {
             newCell.innerHTML = `<input type="date">`;
@@ -473,36 +466,15 @@ window.onload = function () {
             <option>🤢 Dezgustat</option>
         </optgroup>
     </select>
-`;   
+`; 
+                
                 } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-            newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
-        } else {
-            newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
+                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
+                } else {
+                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
+                }
+            }
         }
-
-        newRow.appendChild(newCell);
-    }
-            
-         // Creăm butonul de ștergere (în afara tabelului)
-    let deleteButton = document.createElement("span");
-    deleteButton.innerHTML = "❌"; // Iconița de ștergere
-    deleteButton.classList.add("delete-button"); // Aplicăm stilul
-    deleteButton.title = "Șterge această înregistrare";
-    deleteButton.onclick = function () {
-        deleteRow(rowContainer);
-    };
-
-    // Adăugăm rândul tabelului și butonul într-un container
-    rowContainer.appendChild(newRow);
-    rowContainer.appendChild(deleteButton);
-
-    // Adăugăm containerul în tabel
-    tableBody.appendChild(rowContainer);
-}
-        
-       function deleteRow(rowContainer) {
-    rowContainer.remove(); // Șterge rândul și butonul asociat
-}
 
         function saveJournal() {
     let rows = document.querySelectorAll("#journalTable tbody tr");
