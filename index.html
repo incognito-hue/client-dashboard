@@ -466,15 +466,31 @@ window.onload = function () {
             <option>🤢 Dezgustat</option>
         </optgroup>
     </select>
-`; 
-                
+`;   
                 } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
                     newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
                 } else {
                     newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
                 }
             }
-        }
+        // Adăugăm butonul de ștergere în ultima coloană (în "Noi Sentimente (0-10)")
+    let lastCell = newRow.cells[newRow.cells.length - 1];
+    let deleteButton = document.createElement("span");
+    deleteButton.innerHTML = "❌"; // Iconița de ștergere
+    deleteButton.style.cursor = "pointer";
+    deleteButton.style.marginLeft = "10px";
+    deleteButton.style.color = "red";
+    deleteButton.style.fontSize = "18px";
+    deleteButton.title = "Șterge această înregistrare";
+    deleteButton.onclick = function () {
+        deleteRow(newRow);
+    };
+    lastCell.appendChild(deleteButton);
+}
+        function deleteRow(row) {
+    row.remove(); // Șterge rândul din tabel
+}
+
 
         function saveJournal() {
     let rows = document.querySelectorAll("#journalTable tbody tr");
