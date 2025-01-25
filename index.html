@@ -7,6 +7,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Când utilizatorul schimbă valoarea în câmpurile "Emoție" și "Noua Emoție"
+        document.querySelectorAll("#journalTable tbody").forEach(tbody => {
+            tbody.addEventListener("change", function (event) {
+                let select = event.target;
+
+                // Verifică dacă schimbarea a fost într-un dropdown de emoții
+                if (select.tagName === "SELECT" && (select.closest("td").cellIndex === 3 || select.closest("td").cellIndex === 6)) {
+                    let selectedText = select.options[select.selectedIndex].text; // Obține textul selectat
+                    let emoji = selectedText.split(" ")[0]; // Extrage doar emoji-ul
+
+                    let td = select.closest("td"); // Obține celula tabelului
+                    td.innerHTML = emoji; // Înlocuiește conținutul cu emoji-ul
+                }
+            });
+        });
+    });
+</script>
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
