@@ -184,20 +184,13 @@ td {
 }
 
 /* Stil pentru câmpurile din tabel */
-#journal .table-container td input, 
-#journal .table-container td select {
+td input, td select {
     width: 100%;
-    padding: 6px;
-    border: 1px solid #ccc;
-    transition: all 0.3s ease-in-out; /* Tranziție lină */
-}
-
-#journal .table-container td input:focus, 
-#journal .table-container td select:focus {
-    font-size: 15px; /* Se mărește textul */
-    padding: 10px; /* Crește spațierea */
-    border: 2px solid #007bff; /* Evidențiere la focus */
-    outline: none;
+    padding: 8px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    font-size: 14px; /* Uniformizat cu restul tabelului */
 }
 
     </style>
@@ -464,19 +457,17 @@ window.onload = function () {
     let allFilled = true;
 
     rows.forEach(row => {
-    let inputs = row.querySelectorAll("input, select");
-    let allFilled = true;
+        let inputs = row.querySelectorAll("input, select");
 
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-            allFilled = false;
-        }
-    });
-
-    if (allFilled) {
-        row.style.backgroundColor = "#d4edda"; // Verde deschis pentru zi completată
-    }
-});
+        // Verificăm dacă toate câmpurile sunt completate
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.border = "2px solid red"; // Evidențiem câmpurile goale
+            } else {
+                input.style.border = ""; // Resetăm borderul dacă este completat
+            }
+        });
     });
 
     if (!allFilled) {
