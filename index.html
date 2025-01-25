@@ -418,7 +418,7 @@ window.onload = function () {
     showSection(savedSection, activeLink);
 };
 
-        function addEntry() {
+       function addEntry() {
     let table = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
     let newRow = table.insertRow();
 
@@ -467,15 +467,13 @@ window.onload = function () {
         </optgroup>
     </select>
 `; 
-                
-                } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
-                } else {
-                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
-                }
-            }
+            } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
+            newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
+        } else {
+            newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
         }
-
+    }
+}
         function saveJournal() {
     let rows = document.querySelectorAll("#journalTable tbody tr");
     let dates = [];
@@ -693,6 +691,13 @@ function toggleResources() {
 }
 
 </script>
+function showOnlyEmoji(select) {
+    let selectedText = select.options[select.selectedIndex].text; // Obține textul selectat
+    let emoji = selectedText.split(" ")[0]; // Extrage doar emoji-ul
+
+    let td = select.closest("td"); // Obține celula tabelului
+    td.innerHTML = emoji; // Înlocuiește dropdown-ul cu emoji-ul
+}
 
 </body>
 </html>
