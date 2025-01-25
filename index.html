@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* Buton de ștergere în afara tabelului */
+        /* Buton de ștergere */
         .delete-button {
             cursor: pointer;
             font-size: 20px;
@@ -27,12 +27,6 @@
         }
         .delete-button:hover {
             transform: scale(1.2);
-        }
-
-        /* Ajustare tabel */
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
         }
     </style>
 </head>
@@ -49,15 +43,15 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" onclick="showSection('journal', this)">📖 Jurnal zilnic</a>
-                        <a class="nav-link" onclick="showSection('stats', this)">📊 Grafic Emoțional</a>
-                        <a class="nav-link" onclick="showSection('mood', this)">😊 Monitorizare stare</a>
-                        <a class="nav-link" onclick="showSection('appointments', this)">📅 Programări</a>
-                        <a class="nav-link" onclick="showSection('messages', this)">💬 Mesaje</a>
-                        <a class="nav-link" onclick="showSection('billing', this)">💳 Plăți</a>
-                        <a class="nav-link" onclick="showSection('questionnaires', this)">📝 Chestionare</a>
-                        <a class="nav-link" onclick="showSection('resources', this)">📚 Resurse</a>
-                        <a class="nav-link" onclick="showSection('account', this)">👤 Contul meu</a>
+                        <a class="nav-link" onclick="showSection('journal')">📖 Jurnal zilnic</a>
+                        <a class="nav-link" onclick="showSection('stats')">📊 Grafic Emoțional</a>
+                        <a class="nav-link" onclick="showSection('mood')">😊 Monitorizare stare</a>
+                        <a class="nav-link" onclick="showSection('appointments')">📅 Programări</a>
+                        <a class="nav-link" onclick="showSection('messages')">💬 Mesaje</a>
+                        <a class="nav-link" onclick="showSection('billing')">💳 Plăți</a>
+                        <a class="nav-link" onclick="showSection('questionnaires')">📝 Chestionare</a>
+                        <a class="nav-link" onclick="showSection('resources')">📚 Resurse</a>
+                        <a class="nav-link" onclick="showSection('account')">👤 Contul meu</a>
                         <hr>
                         <a class="nav-link text-danger" onclick="logout()">🔒 Deconectare</a>
                     </div>
@@ -68,13 +62,15 @@
         <!-- Conținut principal -->
         <div id="layoutSidenav_content">
             <main class="container-fluid p-4">
+                
+                <!-- Jurnal zilnic -->
                 <div id="journal" class="section">
                     <div class="card">
                         <div class="card-header">Jurnal zilnic - CBT</div>
                         <div class="card-body">
                             <p>Completează jurnalul zilnic folosind metoda CBT.</p>
 
-                            <div class="table-container">
+                            <div class="table-responsive">
                                 <table class="table table-striped table-bordered" id="journalTable">
                                     <thead class="table-dark">
                                         <tr>
@@ -93,10 +89,12 @@
                             </div>
                             <button class="btn btn-primary mt-3" onclick="addEntry()">➕ Adaugă înregistrare</button>
                             <button class="btn btn-success mt-3" onclick="saveJournal()">💾 Salvează</button>
+                            <button class="btn btn-danger mt-3" onclick="deleteLastEntry()">🗑️ Șterge ultima înregistrare</button>
                         </div>
                     </div>
                 </div>
 
+                <!-- Grafic emoțional -->
                 <div id="stats" class="section d-none">
                     <div class="card">
                         <div class="card-header">Grafic Emoțional</div>
@@ -105,6 +103,7 @@
                         </div>
                     </div>
                 </div>
+
             </main>
         </div>
     </div>
@@ -112,7 +111,7 @@
     <!-- Bootstrap & Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function showSection(sectionId, element) {
+        function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(section => section.classList.add('d-none'));
             document.getElementById(sectionId).classList.remove('d-none');
         }
@@ -156,6 +155,13 @@
             rowContainer.appendChild(newRow);
             rowContainer.appendChild(deleteButton);
             tableBody.appendChild(rowContainer);
+        }
+
+        function deleteLastEntry() {
+            let tableBody = document.getElementById("journalTable").getElementsByTagName('tbody')[0];
+            if (tableBody.rows.length > 0) {
+                tableBody.deleteRow(tableBody.rows.length - 1);
+            }
         }
 
         function logout() {
