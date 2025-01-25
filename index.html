@@ -59,10 +59,11 @@ nav ul li:hover, .active {
 
 .table-container {
     width: 100%;
-    max-height: 500px; /* Ajustează înălțimea maximă a containerului */
-    overflow-y: auto; /* Scroll doar pe conținutul tabelului */
+    max-width: 900px; /* Crește lățimea */
+    max-height: 600px; /* Crește înălțimea */
+    overflow-y: auto; /* Permite scroll pe înălțime */
     background: white;
-    padding: 15px;
+    padding: 20px; /* Adaugă mai mult spațiu în interior */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     position: relative;
@@ -130,42 +131,70 @@ main {
 .active-section {
     display: block;
 }
-/* Încadrare tabel */
+/* Încadrare tabel mai mare */
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Scroll orizontal doar dacă este necesar */
-    background: white; /* Asigură că este vizibil */
-    padding: 10px;
+    max-width: 900px; /* Crește dimensiunea maximă */
+    max-height: 600px; /* Mai mult spațiu pentru tabel */
+    overflow-y: auto; /* Scroll doar vertical pe conținutul tabelului */
+    background: white;
+    padding: 20px; /* Mai mult spațiu în jur */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Fixăm capul tabelului pentru scroll */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Evită alinierea greșită */
+}
+
+.table-container thead {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 2;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Stilizare tabel */
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 13px; /* Dimensiune uniformă */
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
+/* Capul tabelului */
 th {
     background: #007bff;
     color: white;
+    font-weight: bold;
+    font-size: 14px; /* Ușor mai mare decât restul */
+    padding: 10px;
 }
 
+/* Celulele tabelului */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px; /* Același font ca restul textului */
+}
+
+/* Stil pentru câmpurile din tabel */
 td input, td select {
     width: 100%;
-    padding: 5px;
+    padding: 8px;
     border: none;
     background: rgba(0, 0, 0, 0.05);
     border-radius: 5px;
+    font-size: 14px; /* Uniformizat cu restul tabelului */
 }
 
     </style>
+    
 </head>
 <body>
 
@@ -425,7 +454,28 @@ window.onload = function () {
     let initialIntensities = [];
     let newEmotions = [];
     let newIntensities = [];
+    let allFilled = true;
 
+    rows.forEach(row => {
+        let inputs = row.querySelectorAll("input, select");
+
+        // Verificăm dacă toate câmpurile sunt completate
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                allFilled = false;
+                input.style.border = "2px solid red"; // Evidențiem câmpurile goale
+            } else {
+                input.style.border = ""; // Resetăm borderul dacă este completat
+            }
+        });
+    });
+
+    if (!allFilled) {
+        alert("⚠️ Te rog să completezi toate câmpurile înainte de a salva!");
+        return;
+    }
+
+    // Dacă toate sunt completate, salvăm datele și le blocăm
     rows.forEach(row => {
         let date = row.cells[0]?.querySelector("input")?.value || "Fără dată";
         let emotion = row.cells[3]?.querySelector("select")?.value || "N/A";
@@ -440,9 +490,18 @@ window.onload = function () {
             newEmotions.push(newEmotion);
             newIntensities.push(parseInt(newIntensity));
         }
+
+        // Blocăm toate câmpurile după salvare
+        let inputs = row.querySelectorAll("input, select");
+        inputs.forEach(input => {
+            input.disabled = true;
+        });
     });
 
+    // Actualizăm graficul emoțional
     updateChart(dates, initialEmotions, initialIntensities, newEmotions, newIntensities);
+
+    alert("✅ Jurnalul a fost salvat cu succes!");
 }
 
 
@@ -610,4 +669,3 @@ function toggleResources() {
 
 </body>
 </html>
-
