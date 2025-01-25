@@ -86,12 +86,16 @@ nav ul li:hover, .active {
 .table-container td input:focus,
 .table-container td select:focus,
 .table-container td textarea:focus {
-    font-size: 16px; /* Mărește fontul */
-    padding: 12px; /* Mărește spațierea */
-    border: 2px solid #007bff; /* Schimbă culoarea borderului */
+    font-size: 28px; /* Mărește fontul semnificativ */
+    padding: 20px; /* Mărește spațierea */
+    width: 500px; /* Lățește caseta */
+    height: 100px; /* Mărește înălțimea */
+    border: 3px solid #007bff; /* Bordură mai vizibilă */
     outline: none; /* Elimină conturul standard */
     background: rgba(0, 123, 255, 0.1); /* Adaugă un efect subtil */
     transition: all 0.3s ease-in-out; /* Tranziție lină */
+    z-index: 10; /* Asigură că stă deasupra altor elemente */
+    position: relative; /* Previne suprapunerea */
 }
 
 /* Resetare la starea inițială */
@@ -99,7 +103,12 @@ nav ul li:hover, .active {
 .table-container td select,
 .table-container td textarea {
     transition: all 0.3s ease-in-out;
+    width: 100%; /* Revine la dimensiunea normală */
+    height: auto;
+    font-size: 14px;
+    padding: 8px;
 }
+
 
 /* Conținut principal */
 main {
