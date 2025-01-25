@@ -383,6 +383,13 @@ td input, td select {
 </section>
 
     </main>
+function showOnlyEmoji(select) {
+    let selectedText = select.options[select.selectedIndex].text; // Obține textul selectat
+    let emoji = selectedText.split(" ")[0]; // Extrage doar emoji-ul
+
+    let td = select.closest("td"); // Obține celula tabelului
+    td.innerHTML = emoji; // Înlocuiește dropdown-ul cu emoji-ul
+}
 
 
     <script>
@@ -691,13 +698,5 @@ function toggleResources() {
 }
 
 </script>
-function showOnlyEmoji(select) {
-    let selectedText = select.options[select.selectedIndex].text; // Obține textul selectat
-    let emoji = selectedText.split(" ")[0]; // Extrage doar emoji-ul
-
-    let td = select.closest("td"); // Obține celula tabelului
-    td.innerHTML = emoji; // Înlocuiește dropdown-ul cu emoji-ul
-}
-
 </body>
 </html>
