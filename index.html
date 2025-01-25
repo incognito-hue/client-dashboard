@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
@@ -184,14 +184,22 @@ td {
 }
 
 /* Stil pentru câmpurile din tabel */
-td input, td select {
+#journal .table-container td input, 
+#journal .table-container td select {
     width: 100%;
-    padding: 8px;
-    border: none;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-    font-size: 14px; /* Uniformizat cu restul tabelului */
+    padding: 6px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out; /* Tranziție lină */
 }
+
+#journal .table-container td input:focus, 
+#journal .table-container td select:focus {
+    font-size: 15px; /* Se mărește textul */
+    padding: 10px; /* Crește spațierea */
+    border: 2px solid #007bff; /* Evidențiere la focus */
+    outline: none;
+}
+
 
     </style>
     
@@ -377,7 +385,7 @@ td input, td select {
 // La încărcarea paginii, menține secțiunea selectată
 window.onload = function () {
     let savedSection = localStorage.getItem("currentSection") || 'journal';
-    let activeLink = document.querySelector(nav ul li[onclick*="${savedSection}"]);
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
     showSection(savedSection, activeLink);
 };
 
@@ -385,7 +393,7 @@ window.onload = function () {
 // Asigură că secțiunea selectată anterior rămâne activă după un refresh
 window.onload = function () {
     let savedSection = localStorage.getItem("currentSection") || 'journal';
-    let activeLink = document.querySelector(nav ul li[onclick*="${savedSection}"]);
+    let activeLink = document.querySelector(`nav ul li[onclick*="${savedSection}"]`);
     showSection(savedSection, activeLink);
 };
 
@@ -399,9 +407,9 @@ window.onload = function () {
         let newCell = newRow.insertCell(i);
 
         if (columns[i] === "Data") {
-            newCell.innerHTML = <input type="date">;
+            newCell.innerHTML = `<input type="date">`;
         } else if (columns[i] === "Emoție" || columns[i] === "Noua Emoție") {
-            newCell.innerHTML = 
+            newCell.innerHTML = `
     <select>
         <optgroup label="🌞 Emoții pozitive">
             <option>😃 Fericit</option>
@@ -437,12 +445,12 @@ window.onload = function () {
             <option>🤢 Dezgustat</option>
         </optgroup>
     </select>
-; 
+`; 
                 
                 } else if (columns[i] === "Sentimente (0-10)" || columns[i] === "Noi Sentimente (0-10)") {
-                    newCell.innerHTML = <input type="number" min="0" max="10" placeholder="0-10">;
+                    newCell.innerHTML = `<input type="number" min="0" max="10" placeholder="0-10">`;
                 } else {
-                    newCell.innerHTML = <input type="text" placeholder="${columns[i]}">;
+                    newCell.innerHTML = `<input type="text" placeholder="${columns[i]}">`;
                 }
             }
         }
@@ -457,17 +465,20 @@ window.onload = function () {
     let allFilled = true;
 
     rows.forEach(row => {
-        let inputs = row.querySelectorAll("input, select");
+    let inputs = row.querySelectorAll("input, select");
+    let allFilled = true;
 
-        // Verificăm dacă toate câmpurile sunt completate
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                allFilled = false;
-                input.style.border = "2px solid red"; // Evidențiem câmpurile goale
-            } else {
-                input.style.border = ""; // Resetăm borderul dacă este completat
-            }
-        });
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            allFilled = false;
+        }
+    });
+
+    if (allFilled) {
+        row.style.backgroundColor = "#d4edda"; // Verde deschis pentru zi completată
+    }
+});
+
     });
 
     if (!allFilled) {
@@ -512,7 +523,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
         chart.destroy();
     }
 
-    let labels = dates.map((date, i) => ${date} - ${initialEmotions[i]} → ${newEmotions[i]});
+    let labels = dates.map((date, i) => `${date} - ${initialEmotions[i]} → ${newEmotions[i]}`);
 
     chart = new Chart(ctx, {
         type: "bar",
@@ -574,7 +585,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
    window.onload = function () {
     let savedSection = localStorage.getItem("currentSection");
     if (savedSection) {
-        let activeLink = document.querySelector(nav ul li a[onclick*="${savedSection}"]);
+        let activeLink = document.querySelector(`nav ul li a[onclick*="${savedSection}"]`);
         showSection(savedSection, activeLink);
     } else {
         showSection('journal', document.querySelector('nav ul li a'));
@@ -602,7 +613,7 @@ function updateChart(dates, initialEmotions, initialIntensities, newEmotions, ne
 
         questionnaires.forEach(q => {
             let listItem = document.createElement("li");
-            listItem.innerHTML = <a href="${q.url}" target="_blank" style="color: #007bff; font-weight: bold;">📎 ${q.name}</a>;
+            listItem.innerHTML = `<a href="${q.url}" target="_blank" style="color: #007bff; font-weight: bold;">📎 ${q.name}</a>`;
             list.appendChild(listItem);
         });
     }
